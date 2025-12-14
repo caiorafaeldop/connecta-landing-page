@@ -6,10 +6,18 @@ export const Footer: React.FC = () => (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <div className="col-span-1 md:col-span-1">
-                    <div className="flex items-center gap-2 mb-4">
-                        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">
-                            <span className="material-icons text-sm">hub</span>
-                        </div>
+                    <div className="flex items-center gap-3 mb-4">
+                        <svg width="32" height="32" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            {/* Connections */}
+                            <path d="M25 15 L12 38" stroke="white" strokeWidth="4" strokeLinecap="round" />
+                            <path d="M25 15 L38 38" stroke="white" strokeWidth="4" strokeLinecap="round" />
+                            <path d="M12 38 L38 38" stroke="white" strokeWidth="4" strokeLinecap="round" />
+                            
+                            {/* Nodes */}
+                            <circle cx="12" cy="38" r="7" fill="white" />
+                            <circle cx="38" cy="38" r="7" fill="white" />
+                            <circle cx="25" cy="15" r="7" className="fill-primary" />
+                        </svg>
                         <span className="font-display font-bold text-xl">connecta<span className="text-primary">CI</span></span>
                     </div>
                     <p className="text-gray-400 text-sm mb-6">

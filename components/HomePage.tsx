@@ -16,11 +16,49 @@ export const HomePage: React.FC = () => {
         {val: "UFPB", lab: "Base"}
     ];
 
+    // SVG Component for reusability within the file
+    const GraphIcon = ({ className }: { className: string }) => (
+        <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+            <path d="M25 15 L12 38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            <path d="M25 15 L38 38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            <path d="M12 38 L38 38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            <circle cx="12" cy="38" r="6" fill="currentColor" />
+            <circle cx="38" cy="38" r="6" fill="currentColor" />
+            <circle cx="25" cy="15" r="6" fill="currentColor" />
+        </svg>
+    );
+
     return (
         <div className="animate-fade-in pt-20">
-             <header className="relative overflow-hidden network-bg py-20 lg:py-32 border-b border-white/5">
-                <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl"></div>
+             <header className="relative overflow-hidden py-24 lg:py-32 border-b border-white/5 bg-background-light dark:bg-background-dark">
+                {/* Floating Graphs Background */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    {/* 1. Top Left - Large, Primary */}
+                    <div className="absolute top-10 -left-10 opacity-[0.03] dark:opacity-[0.05] animate-float text-primary rotate-12">
+                        <GraphIcon className="w-64 h-64" />
+                    </div>
+                    {/* 2. Top Right - Medium, Secondary/White */}
+                    <div className="absolute top-20 right-10 opacity-[0.03] dark:opacity-[0.05] animate-float-delayed text-secondary dark:text-white -rotate-12">
+                        <GraphIcon className="w-40 h-40" />
+                    </div>
+                    {/* 3. Bottom Left - Medium, Primary */}
+                    <div className="absolute bottom-10 left-20 opacity-[0.04] dark:opacity-[0.06] animate-float-slow text-primary rotate-45">
+                        <GraphIcon className="w-48 h-48" />
+                    </div>
+                    {/* 4. Bottom Right - Large, Secondary/White */}
+                    <div className="absolute -bottom-10 -right-10 opacity-[0.03] dark:opacity-[0.05] animate-float text-secondary dark:text-white rotate-[-15deg]">
+                        <GraphIcon className="w-72 h-72" />
+                    </div>
+                    {/* 5. Center Top - Small, Primary */}
+                    <div className="absolute top-5 left-1/2 transform -translate-x-1/2 opacity-[0.04] dark:opacity-[0.07] animate-float-delayed text-primary">
+                        <GraphIcon className="w-24 h-24" />
+                    </div>
+                </div>
+
+                {/* Light Gradients */}
+                <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-600/5 rounded-full blur-3xl"></div>
+                
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-3xl mx-auto">
                         <span className="inline-flex items-center py-1 px-3 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-sm mb-6 tracking-wide uppercase">

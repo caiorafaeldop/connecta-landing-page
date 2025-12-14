@@ -23,10 +23,18 @@ export const NavBar: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-20 items-center">
                     {/* Logo */}
-                    <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer group no-underline">
-                        <div className="relative w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform">
-                            <span className="material-icons">hub</span>
-                        </div>
+                    <Link to="/" className="flex-shrink-0 flex items-center gap-3 cursor-pointer group no-underline">
+                        <svg width="42" height="42" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-110 transition-transform">
+                            {/* Connections */}
+                            <path d="M25 15 L12 38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-secondary dark:text-white" />
+                            <path d="M25 15 L38 38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-secondary dark:text-white" />
+                            <path d="M12 38 L38 38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-secondary dark:text-white" />
+                            
+                            {/* Nodes */}
+                            <circle cx="12" cy="38" r="7" className="fill-secondary dark:fill-white" />
+                            <circle cx="38" cy="38" r="7" className="fill-secondary dark:fill-white" />
+                            <circle cx="25" cy="15" r="7" className="fill-primary" />
+                        </svg>
                         <span className="font-display font-bold text-2xl text-secondary dark:text-white tracking-tight">connecta<span className="text-primary">CI</span></span>
                     </Link>
 
