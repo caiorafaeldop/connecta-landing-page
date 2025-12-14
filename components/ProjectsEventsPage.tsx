@@ -5,7 +5,7 @@ export const ProjectsEventsPage: React.FC = () => {
     const [filter, setFilter] = useState('Todos');
 
     const projects: Project[] = [
-        { title: "Conexão Tech 2023", tag: "Eventos", color: "bg-blue-600", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDszC6l5BaV19NZhiJICzCaMMzjJv0Afy97MF-Q6DVQYzHIGelrDIE-6it2YBjmPYTlLHOZ4P4FN9VWBgI_I4xPhhpVLD53DXxSt0IEO58FPoEK5axlEkvSz3qUMXMkh_BvFBexcKHlBGBQHU2bFal62Zg7GvmodhyfRAPV6tJ8AFoG9w_bg7owV-O-x2w6QsgWofRHWPmbTupmAyGVrWpc4Ss796TFY5ptHF20PZElkfr_0O-0XnqfIWqQsz4BZ4iDY9Ysxx7eyoRs", desc: "Uma série de palestras com ex-alunos que hoje atuam em grandes empresas." },
+        { title: "Conexão Tech 2025", tag: "Eventos", color: "bg-blue-600", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDszC6l5BaV19NZhiJICzCaMMzjJv0Afy97MF-Q6DVQYzHIGelrDIE-6it2YBjmPYTlLHOZ4P4FN9VWBgI_I4xPhhpVLD53DXxSt0IEO58FPoEK5axlEkvSz3qUMXMkh_BvFBexcKHlBGBQHU2bFal62Zg7GvmodhyfRAPV6tJ8AFoG9w_bg7owV-O-x2w6QsgWofRHWPmbTupmAyGVrWpc4Ss796TFY5ptHF20PZElkfr_0O-0XnqfIWqQsz4BZ4iDY9Ysxx7eyoRs", desc: "Uma série de palestras com ex-alunos que hoje atuam em grandes empresas." },
         { title: "Python para Dados", tag: "Bootcamps", color: "bg-emerald-500", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAQd7Zcs2jQTjb6OUJOCb-hOXv7LD01lAuSzSs3URjU32GPnE-Jkwb9KvINhrwHW2tJ0LIpr1XRnwYOwnbBoSiT3JCbQMls3LzP5AG4z26ttxVkUS3F3RgT35s1ZM4XpfD3h9piFaBye4WaPkeilvwektfovSDj-5UkjrktnAR2DoVsIs-RiXVdxnbcSvgqrLucYGNwq5Xh84wpVzG71g0K4tTZhVM-2GOC9mqzQO-bhBFKlsy0KGho7Q--o_ocFakhlF8n1Tb9M4x0", desc: "Capacitação técnica intensiva focada em bibliotecas como Pandas e NumPy." },
         { title: "Inclusão Digital", tag: "Extensão", color: "bg-purple-500", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDLjbp6hTUx4PZ-QCQGsCFT-iiHbKKJAWvmXSpJuNRVjWdioljFHbHRgZ1NdBDtAiSPOMgWNsCz3KvF-sGm_g7o3sIBcBoyDQSaNvsePBT2Wi_RdbFSBqRpG78-P14pl_oX3VRN3Xisq5ZiXm93m_avtUjtm1WGnxM-WWaPqUwg5bxkUaDMfYCYQvRQibOKtR2XozrBznGrJN1X22JTswCdzKT4qJ61R7nrkQG73DX_QfArhYHVfnpOEFwbeiYJcyQdGRtmP_Y2T9tJ", desc: "Projeto contínuo onde alunos ensinam informática básica para idosos." }
     ];
@@ -161,7 +161,7 @@ export const ProjectsEventsPage: React.FC = () => {
                             </div>
                             <div className="flex-1">
                                 <h5 className="font-bold text-secondary dark:text-white text-lg">Encerramento Inscrições Trainee</h5>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">Processo Seletivo 2023.2</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Processo Seletivo 2025.2</p>
                             </div>
                         </div>
                         <div className="bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center gap-4 border-l-4 border-purple-500">
