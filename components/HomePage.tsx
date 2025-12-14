@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FeatureItem, StatItem } from '../types';
 
 export const HomePage: React.FC = () => {
@@ -15,6 +15,23 @@ export const HomePage: React.FC = () => {
         {val: "+10", lab: "Projetos"}, 
         {val: "UFPB", lab: "Base"}
     ];
+
+    // Image Slideshow Configuration
+    const slideshowImages = [
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuC4a4ux36eMjzQgGsxMfCUSbgTdtXEbnHNuReK5tPCaaqYi-p_uZzWzF9XCGwrV51cKGacgQ5cDL5gyNff_4ngqzbGh4nNuDcA66pNzPCHvcT5Bi_Egw2AWkMeyH05YCeyJQoaM8Vfb7528D1Sk2Nwwcz-Y-bH5Qx1EInjMlgzzw2dD3rpqSalC23p4ADowF6se3BDrck_kV12I-n7u8JW2csXWQJXkD_LxdHBLzR4pM6HmBezsTdG30G7Sgz6m7SejGapZyuYjuUCv",
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1740",
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1742",
+        "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1740"
+    ];
+
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slideshowImages.length);
+        }, 4000); // Change slide every 4 seconds
+        return () => clearInterval(timer);
+    }, []);
 
     // SVG Component for reusability within the file
     const GraphIcon = ({ className }: { className: string }) => (
@@ -78,13 +95,36 @@ export const HomePage: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div className="relative">
-                            <div className="aspect-video rounded-xl overflow-hidden shadow-2xl relative group ring-1 ring-gray-900/5 dark:ring-white/10">
-                                <img alt="Estudantes" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4a4ux36eMjzQgGsxMfCUSbgTdtXEbnHNuReK5tPCaaqYi-p_uZzWzF9XCGwrV51cKGacgQ5cDL5gyNff_4ngqzbGh4nNuDcA66pNzPCHvcT5Bi_Egw2AWkMeyH05YCeyJQoaM8Vfb7528D1Sk2Nwwcz-Y-bH5Qx1EInjMlgzzw2dD3rpqSalC23p4ADowF6se3BDrck_kV12I-n7u8JW2csXWQJXkD_LxdHBLzR4pM6HmBezsTdG30G7Sgz6m7SejGapZyuYjuUCv"/>
-                                <div className="absolute inset-0 bg-secondary/40 mix-blend-multiply"></div>
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/40 group-hover:scale-110 transition-transform duration-300 cursor-pointer shadow-lg shadow-black/20">
-                                        <span className="material-symbols-outlined text-white text-3xl">play_arrow</span>
+                            {/* Slideshow Container */}
+                            <div className="aspect-video rounded-xl overflow-hidden shadow-2xl relative group ring-1 ring-gray-900/5 dark:ring-white/10 bg-gray-100 dark:bg-gray-800">
+                                {slideshowImages.map((img, index) => (
+                                    <div
+                                        key={index}
+                                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                                            index === currentSlide ? 'opacity-100' : 'opacity-0'
+                                        }`}
+                                    >
+                                        <img
+                                            src={img}
+                                            alt={`Slide ${index + 1}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                         <div className="absolute inset-0 bg-secondary/30 mix-blend-multiply"></div>
                                     </div>
+                                ))}
+                                
+                                {/* Navigation Dots */}
+                                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+                                    {slideshowImages.map((_, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => setCurrentSlide(idx)}
+                                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                                                idx === currentSlide ? 'bg-primary w-8' : 'bg-white/50 w-2 hover:bg-white'
+                                            }`}
+                                            aria-label={`Go to slide ${idx + 1}`}
+                                        />
+                                    ))}
                                 </div>
                             </div>
                             <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary rounded-lg -z-10 opacity-20 blur-xl"></div>

@@ -47,7 +47,7 @@ export const ProjectsEventsPage: React.FC = () => {
                                 <span className="text-primary bg-clip-text">Seletivo</span>
                             </h2>
                             <div className="mt-4 inline-block border-2 border-slate-900 dark:border-white px-6 py-2 rounded-lg">
-                                <span className="font-display font-bold text-xl tracking-widest text-slate-900 dark:text-white uppercase">Trainee 2023.2</span>
+                                <span className="font-display font-bold text-xl tracking-widest text-slate-900 dark:text-white uppercase">Trainee 2025.2</span>
                             </div>
                         </div>
                         <div className="space-y-6">
