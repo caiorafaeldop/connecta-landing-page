@@ -33,9 +33,8 @@ export const Footer: React.FC = () => (
                 <div>
                     <h4 className="font-display font-bold text-lg mb-4">Parceiros</h4>
                     <ul className="space-y-2 text-gray-400 text-sm">
-                        <li><a className="hover:text-primary transition-colors" href="#">Centro de Informática</a></li>
-                        <li><a className="hover:text-primary transition-colors" href="#">UFPB</a></li>
-                        <li><a className="hover:text-primary transition-colors" href="#">Empresas Juniores</a></li>
+                        <li><a className="hover:text-primary transition-colors" href="https://www.ci.ufpb.br/" target="_blank" rel="noopener noreferrer">Centro de Informática</a></li>
+                        <li><a className="hover:text-primary transition-colors" href="https://www.ufpb.br/" target="_blank" rel="noopener noreferrer">UFPB</a></li>
                     </ul>
                 </div>
                 <div>
