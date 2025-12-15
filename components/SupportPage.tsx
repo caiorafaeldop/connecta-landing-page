@@ -3,10 +3,19 @@ import React, { useState } from 'react';
 export const SupportPage: React.FC = () => {
      const [amount, setAmount] = useState<number | null>(null);
      const [customAmount, setCustomAmount] = useState("");
-     const [frequency, setFrequency] = useState('Mensal');
+     const [paymentMethod, setPaymentMethod] = useState('Pix');
      const [email, setEmail] = useState("");
+     const [copied, setCopied] = useState(false);
 
-     const handlePayment = () => {
+     const pixKey = "11916216420";
+
+     const handleCopyPix = () => {
+        navigator.clipboard.writeText(pixKey);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 3000);
+     };
+
+     const handleCardPayment = () => {
         const finalAmount = customAmount ? customAmount : amount;
         if (!finalAmount) {
             alert("⚠️ Por favor, selecione ou digite um valor para contribuir.");
@@ -16,7 +25,7 @@ export const SupportPage: React.FC = () => {
             alert("⚠️ Por favor, informe seu e-mail.");
             return;
         }
-        alert(`🚀 Obrigado pelo apoio!\n\nIniciando processo de doação ${frequency} no valor de R$ ${finalAmount}.\nUm link de pagamento foi enviado para ${email}.`);
+        alert(`🚀 Obrigado pelo apoio!\n\nIniciando pagamento via Cartão no valor de R$ ${finalAmount}.\nAs instruções foram enviadas para ${email}.`);
      };
 
      return (
@@ -56,78 +65,115 @@ export const SupportPage: React.FC = () => {
                             <div className="absolute -top-4 -right-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full shadow-lg transform rotate-12">SEJA MEMBRO</div>
                             <div className="text-center mb-8">
                                 <h2 className="font-display font-bold text-2xl text-gray-900 dark:text-white mb-2">Faça sua contribuição</h2>
-                                <p className="text-sm text-gray-500 dark:text-gray-300">Escolha a frequência e o valor da sua doação.</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-300">Escolha o método de pagamento.</p>
                             </div>
+                            
+                            {/* Payment Method Selection */}
                             <div className="flex p-1.5 bg-gray-100 dark:bg-black/30 rounded-xl mb-8 border border-gray-200 dark:border-white/5">
                                 <button 
-                                    onClick={() => setFrequency('Mensal')}
-                                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${frequency === 'Mensal' ? 'shadow-sm bg-white dark:bg-primary text-primary dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
+                                    onClick={() => setPaymentMethod('Pix')}
+                                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${paymentMethod === 'Pix' ? 'shadow-sm bg-white dark:bg-primary text-primary dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
                                 >
-                                    Mensal
+                                    <span className="material-symbols-outlined text-lg">qr_code_2</span>
+                                    Pix
                                 </button>
                                 <button 
-                                    onClick={() => setFrequency('Única')}
-                                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${frequency === 'Única' ? 'shadow-sm bg-white dark:bg-primary text-primary dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
+                                    onClick={() => setPaymentMethod('Cartão')}
+                                    className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${paymentMethod === 'Cartão' ? 'shadow-sm bg-white dark:bg-primary text-primary dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
                                 >
-                                    Única
+                                    <span className="material-symbols-outlined text-lg">credit_card</span>
+                                    Cartão
                                 </button>
                             </div>
-                            <div className="grid grid-cols-3 gap-3 mb-6">
-                                {[20, 50, 100].map(val => (
+
+                            {paymentMethod === 'Pix' ? (
+                                <div className="flex flex-col items-center animate-fade-in">
+                                    <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mb-6 w-full max-w-xs mx-auto">
+                                        <div className="aspect-square bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 relative overflow-hidden">
+                                            <div className="text-center p-4">
+                                                <span className="material-symbols-outlined text-5xl text-gray-400 mb-2">qr_code_2</span>
+                                                <p className="text-sm text-gray-500 font-medium">QR Code aqui</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <button 
-                                        key={val}
-                                        onClick={() => {
-                                            setAmount(val);
-                                            setCustomAmount("");
-                                        }}
-                                        className={`py-4 px-4 rounded-xl border-2 font-semibold transition-all ${amount === val ? 'border-primary bg-primary/10 text-primary' : 'border-gray-200 dark:border-white/10 hover:border-primary text-gray-700 dark:text-white'}`}
+                                        onClick={handleCopyPix}
+                                        className={`w-full py-4 rounded-xl font-bold shadow-lg transform transition-all hover:-translate-y-1 flex items-center justify-center gap-2 group text-lg ${
+                                            copied 
+                                            ? 'bg-green-500 text-white shadow-green-500/30' 
+                                            : 'bg-gradient-to-r from-primary to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white shadow-blue-500/30'
+                                        }`}
                                     >
-                                        R$ {val}
+                                        <span className="material-symbols-outlined text-2xl">
+                                            {copied ? 'check_circle' : 'content_copy'}
+                                        </span>
+                                        <span>{copied ? 'Copiado com sucesso!' : 'Copiar Chave Pix'}</span>
                                     </button>
-                                ))}
-                            </div>
-                            <div className="relative mb-6">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span className="text-gray-500 font-semibold sm:text-sm">R$</span>
+                                     <p className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
+                                        <span className="material-symbols-outlined text-sm">lock</span> Pagamento 100% seguro
+                                    </p>
                                 </div>
-                                <input 
-                                    value={customAmount}
-                                    onChange={(e) => {
-                                        setCustomAmount(e.target.value);
-                                        if(e.target.value) setAmount(null);
-                                    }}
-                                    className="focus:ring-2 focus:ring-primary focus:border-primary block w-full pl-10 pr-12 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-black/20 dark:text-white rounded-xl py-4 transition-shadow" 
-                                    placeholder="Outro valor" 
-                                    type="number"
-                                />
-                            </div>
-                            <div className="space-y-4 mb-8">
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 ml-1">Seu E-mail</label>
-                                    <div className="relative">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <span className="material-symbols-outlined text-gray-400 text-sm">mail</span>
+                            ) : (
+                                <div className="animate-fade-in">
+                                     <div className="grid grid-cols-3 gap-3 mb-6">
+                                        {[20, 50, 100].map(val => (
+                                            <button 
+                                                key={val}
+                                                onClick={() => {
+                                                    setAmount(val);
+                                                    setCustomAmount("");
+                                                }}
+                                                className={`py-4 px-4 rounded-xl border-2 font-semibold transition-all ${amount === val ? 'border-primary bg-primary/10 text-primary' : 'border-gray-200 dark:border-white/10 hover:border-primary text-gray-700 dark:text-white'}`}
+                                            >
+                                                R$ {val}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <div className="relative mb-6">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <span className="text-gray-500 font-semibold sm:text-sm">R$</span>
                                         </div>
                                         <input 
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            className="focus:ring-2 focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-black/20 dark:text-white rounded-xl py-3" 
-                                            placeholder="voce@exemplo.com" 
-                                            type="email"
+                                            value={customAmount}
+                                            onChange={(e) => {
+                                                setCustomAmount(e.target.value);
+                                                if(e.target.value) setAmount(null);
+                                            }}
+                                            className="focus:ring-2 focus:ring-primary focus:border-primary block w-full pl-10 pr-12 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-black/20 dark:text-white rounded-xl py-4 transition-shadow" 
+                                            placeholder="Outro valor" 
+                                            type="number"
                                         />
                                     </div>
+                                    <div className="space-y-4 mb-8">
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 ml-1">Seu E-mail</label>
+                                            <div className="relative">
+                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <span className="material-symbols-outlined text-gray-400 text-sm">mail</span>
+                                                </div>
+                                                <input 
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    className="focus:ring-2 focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-black/20 dark:text-white rounded-xl py-3" 
+                                                    placeholder="voce@exemplo.com" 
+                                                    type="email"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        onClick={handleCardPayment}
+                                        className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 transform transition hover:-translate-y-1 flex items-center justify-center gap-2 group text-lg"
+                                    >
+                                        <span>Pagar com Cartão</span>
+                                        <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                    </button>
+                                    <p className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
+                                        <span className="material-symbols-outlined text-sm">lock</span> Pagamento 100% seguro
+                                    </p>
                                 </div>
-                            </div>
-                            <button 
-                                onClick={handlePayment}
-                                className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 transform transition hover:-translate-y-1 flex items-center justify-center gap-2 group text-lg"
-                            >
-                                <span>Continuar para Pagamento</span>
-                                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                            </button>
-                            <p className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
-                                <span className="material-symbols-outlined text-sm">lock</span> Pagamento 100% seguro
-                            </p>
+                            )}
                         </div>
                     </div>
                 </div>
