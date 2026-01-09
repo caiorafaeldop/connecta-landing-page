@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 
 export const SupportPage: React.FC = () => {
-     const [amount, setAmount] = useState<number | null>(null);
-     const [customAmount, setCustomAmount] = useState("");
-     const [paymentMethod, setPaymentMethod] = useState('Pix');
-     const [email, setEmail] = useState("");
-     const [copied, setCopied] = useState(false);
+    const [amount, setAmount] = useState<number | null>(null);
+    const [customAmount, setCustomAmount] = useState("");
+    const [paymentMethod, setPaymentMethod] = useState('Pix');
+    const [email, setEmail] = useState("");
+    const [copied, setCopied] = useState(false);
 
-     const pixKey = "11916216420";
+    const pixKey = "11916216420";
 
-     const handleCopyPix = () => {
+    const handleCopyPix = () => {
         navigator.clipboard.writeText(pixKey);
         setCopied(true);
         setTimeout(() => setCopied(false), 3000);
-     };
+    };
 
-     const handleCardPayment = () => {
+    const handleCardPayment = () => {
         const finalAmount = customAmount ? customAmount : amount;
         if (!finalAmount) {
             alert("⚠️ Por favor, selecione ou digite um valor para contribuir.");
@@ -26,10 +26,10 @@ export const SupportPage: React.FC = () => {
             return;
         }
         alert(`🚀 Obrigado pelo apoio!\n\nIniciando pagamento via Cartão no valor de R$ ${finalAmount}.\nAs instruções foram enviadas para ${email}.`);
-     };
+    };
 
-     return (
-        <main className="flex-grow relative overflow-hidden pt-20">
+    return (
+        <main className="flex-grow relative overflow-hidden pt-20 animate-fade-in">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
                     <div className="space-y-8">
@@ -38,7 +38,7 @@ export const SupportPage: React.FC = () => {
                             <span className="text-primary font-bold text-xs tracking-wide uppercase">Iniciativa Estudantil UFPB</span>
                         </div>
                         <h1 className="font-display font-extrabold text-5xl sm:text-6xl leading-tight text-gray-900 dark:text-white">
-                            Construa o futuro da <br/>
+                            Construa o futuro da <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Tecnologia</span> conosco
                         </h1>
                         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">
@@ -67,17 +67,17 @@ export const SupportPage: React.FC = () => {
                                 <h2 className="font-display font-bold text-2xl text-gray-900 dark:text-white mb-2">Faça sua contribuição</h2>
                                 <p className="text-sm text-gray-500 dark:text-gray-300">Escolha o método de pagamento.</p>
                             </div>
-                            
+
                             {/* Payment Method Selection */}
                             <div className="flex p-1.5 bg-gray-100 dark:bg-black/30 rounded-xl mb-8 border border-gray-200 dark:border-white/5">
-                                <button 
+                                <button
                                     onClick={() => setPaymentMethod('Pix')}
                                     className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${paymentMethod === 'Pix' ? 'shadow-sm bg-white dark:bg-primary text-primary dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
                                 >
                                     <span className="material-symbols-outlined text-lg">qr_code_2</span>
                                     Pix
                                 </button>
-                                <button 
+                                <button
                                     onClick={() => setPaymentMethod('Cartão')}
                                     className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${paymentMethod === 'Cartão' ? 'shadow-sm bg-white dark:bg-primary text-primary dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
                                 >
@@ -97,28 +97,27 @@ export const SupportPage: React.FC = () => {
                                         </div>
                                     </div>
 
-                                    <button 
+                                    <button
                                         onClick={handleCopyPix}
-                                        className={`w-full py-4 rounded-xl font-bold shadow-lg transform transition-all hover:-translate-y-1 flex items-center justify-center gap-2 group text-lg ${
-                                            copied 
-                                            ? 'bg-green-500 text-white shadow-green-500/30' 
-                                            : 'bg-gradient-to-r from-primary to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white shadow-blue-500/30'
-                                        }`}
+                                        className={`w-full py-4 rounded-xl font-bold shadow-lg transform transition-all hover:-translate-y-1 flex items-center justify-center gap-2 group text-lg ${copied
+                                                ? 'bg-green-500 text-white shadow-green-500/30'
+                                                : 'bg-gradient-to-r from-primary to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white shadow-blue-500/30'
+                                            }`}
                                     >
                                         <span className="material-symbols-outlined text-2xl">
                                             {copied ? 'check_circle' : 'content_copy'}
                                         </span>
                                         <span>{copied ? 'Copiado com sucesso!' : 'Copiar Chave Pix'}</span>
                                     </button>
-                                     <p className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
+                                    <p className="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
                                         <span className="material-symbols-outlined text-sm">lock</span> Pagamento 100% seguro
                                     </p>
                                 </div>
                             ) : (
                                 <div className="animate-fade-in">
-                                     <div className="grid grid-cols-3 gap-3 mb-6">
+                                    <div className="grid grid-cols-3 gap-3 mb-6">
                                         {[20, 50, 100].map(val => (
-                                            <button 
+                                            <button
                                                 key={val}
                                                 onClick={() => {
                                                     setAmount(val);
@@ -134,14 +133,14 @@ export const SupportPage: React.FC = () => {
                                         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                             <span className="text-gray-500 font-semibold sm:text-sm">R$</span>
                                         </div>
-                                        <input 
+                                        <input
                                             value={customAmount}
                                             onChange={(e) => {
                                                 setCustomAmount(e.target.value);
-                                                if(e.target.value) setAmount(null);
+                                                if (e.target.value) setAmount(null);
                                             }}
-                                            className="focus:ring-2 focus:ring-primary focus:border-primary block w-full pl-10 pr-12 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-black/20 dark:text-white rounded-xl py-4 transition-shadow" 
-                                            placeholder="Outro valor" 
+                                            className="focus:ring-2 focus:ring-primary focus:border-primary block w-full pl-10 pr-12 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-black/20 dark:text-white rounded-xl py-4 transition-shadow"
+                                            placeholder="Outro valor"
                                             type="number"
                                         />
                                     </div>
@@ -152,17 +151,17 @@ export const SupportPage: React.FC = () => {
                                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                     <span className="material-symbols-outlined text-gray-400 text-sm">mail</span>
                                                 </div>
-                                                <input 
+                                                <input
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
-                                                    className="focus:ring-2 focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-black/20 dark:text-white rounded-xl py-3" 
-                                                    placeholder="voce@exemplo.com" 
+                                                    className="focus:ring-2 focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-600 dark:bg-black/20 dark:text-white rounded-xl py-3"
+                                                    placeholder="voce@exemplo.com"
                                                     type="email"
                                                 />
                                             </div>
                                         </div>
                                     </div>
-                                    <button 
+                                    <button
                                         onClick={handleCardPayment}
                                         className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 transform transition hover:-translate-y-1 flex items-center justify-center gap-2 group text-lg"
                                     >
@@ -185,11 +184,11 @@ export const SupportPage: React.FC = () => {
                         </p>
                     </div>
                     <div className="grid md:grid-cols-3 gap-8">
-                        {[{t: "Educação", p: "60%", d: "Bootcamps e workshops"}, {t: "Comunidade", p: "25%", d: "Eventos e integração"}, {t: "Infraestrutura", p: "15%", d: "Servidores e ferramentas"}].map((it, i) => (
+                        {[{ t: "Educação", p: "60%", d: "Bootcamps e workshops" }, { t: "Comunidade", p: "25%", d: "Eventos e integração" }, { t: "Infraestrutura", p: "15%", d: "Servidores e ferramentas" }].map((it, i) => (
                             <div key={i} className="bg-white dark:bg-white/5 p-8 rounded-2xl border border-gray-100 dark:border-white/5 hover:border-primary/50 transition-all hover:shadow-lg group">
                                 <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-3">{it.t}</h3>
                                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-4">
-                                    <div className="bg-primary h-1.5 rounded-full" style={{width: it.p}}></div>
+                                    <div className="bg-primary h-1.5 rounded-full" style={{ width: it.p }}></div>
                                 </div>
                                 <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{it.p} - {it.d}</p>
                             </div>
@@ -198,5 +197,5 @@ export const SupportPage: React.FC = () => {
                 </div>
             </div>
         </main>
-     );
+    );
 };
