@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Project } from '../types';
+import { SkeletonLoader } from './SkeletonLoader';
 
 export const ProjectsEventsPage: React.FC = () => {
     const [filter, setFilter] = useState('Todos');
+    const [imagesLoaded, setImagesLoaded] = useState<{ [key: number]: boolean }>({});
 
     const projects: Project[] = [
         { title: "Conexão Tech 2025", tag: "Eventos", color: "bg-blue-600", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDszC6l5BaV19NZhiJICzCaMMzjJv0Afy97MF-Q6DVQYzHIGelrDIE-6it2YBjmPYTlLHOZ4P4FN9VWBgI_I4xPhhpVLD53DXxSt0IEO58FPoEK5axlEkvSz3qUMXMkh_BvFBexcKHlBGBQHU2bFal62Zg7GvmodhyfRAPV6tJ8AFoG9w_bg7owV-O-x2w6QsgWofRHWPmbTupmAyGVrWpc4Ss796TFY5ptHF20PZElkfr_0O-0XnqfIWqQsz4BZ4iDY9Ysxx7eyoRs", desc: "Uma série de palestras com ex-alunos que hoje atuam em grandes empresas." },
@@ -14,14 +16,14 @@ export const ProjectsEventsPage: React.FC = () => {
 
     return (
         <div className="animate-fade-in pt-20">
-             <header className="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 bg-surface-light dark:bg-background-dark overflow-hidden">
+            <header className="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 bg-surface-light dark:bg-background-dark overflow-hidden">
                 <div className="absolute inset-0 z-0 bg-network-pattern opacity-100 dark:opacity-30"></div>
                 <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl"></div>
                 <div className="max-w-7xl mx-auto relative z-10 text-center">
                     <span className="inline-block py-1 px-3 rounded-full bg-primary/10 dark:bg-primary/20 text-primary font-bold text-sm mb-6 uppercase tracking-wider border border-primary/20">Inovação e Conexão</span>
                     <h1 className="text-4xl md:text-6xl font-display font-extrabold text-secondary dark:text-white mb-6 leading-tight">
-                        Projetos que Transformam, <br/>
+                        Projetos que Transformam, <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Eventos que Conectam</span>
                     </h1>
                     <p className="max-w-2xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed">
@@ -29,7 +31,7 @@ export const ProjectsEventsPage: React.FC = () => {
                     </p>
                 </div>
             </header>
-            
+
             {/* Processo Seletivo Section */}
             <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-gray-200 dark:border-gray-800">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -43,7 +45,7 @@ export const ProjectsEventsPage: React.FC = () => {
                         </div>
                         <div>
                             <h2 className="font-display font-black text-4xl sm:text-5xl leading-tight text-slate-900 dark:text-white">
-                                Processo <br/>
+                                Processo <br />
                                 <span className="text-primary bg-clip-text">Seletivo</span>
                             </h2>
                             <div className="mt-4 inline-block border-2 border-slate-900 dark:border-white px-6 py-2 rounded-lg">
@@ -52,9 +54,9 @@ export const ProjectsEventsPage: React.FC = () => {
                         </div>
                         <div className="space-y-6">
                             {[
-                                {icon: "school", title: "Capacitação Técnica", desc: "Através de Bootcamps intensivos e minicursos práticos."},
-                                {icon: "folder_special", title: "Desenvolvimento de Portfólio", desc: "Construa projetos reais para mostrar ao mercado."},
-                                {icon: "groups", title: "Networking Exclusivo", desc: "Rodas de conversa com grandes nomes do mercado."}
+                                { icon: "school", title: "Capacitação Técnica", desc: "Através de Bootcamps intensivos e minicursos práticos." },
+                                { icon: "folder_special", title: "Desenvolvimento de Portfólio", desc: "Construa projetos reais para mostrar ao mercado." },
+                                { icon: "groups", title: "Networking Exclusivo", desc: "Rodas de conversa com grandes nomes do mercado." }
                             ].map((item, i) => (
                                 <div key={i} className="flex items-start space-x-4 group p-3 -ml-3 rounded-xl hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
                                     <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary">
@@ -68,7 +70,7 @@ export const ProjectsEventsPage: React.FC = () => {
                             ))}
                         </div>
                         <div className="pt-4">
-                            <button 
+                            <button
                                 onClick={() => alert("🎉 Redirecionando para inscrição...")}
                                 className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:bg-sky-400 transform hover:-translate-y-1 transition-all duration-300 text-center flex items-center justify-center gap-2 group">
                                 Inscrever-se Agora
@@ -88,7 +90,7 @@ export const ProjectsEventsPage: React.FC = () => {
                                 </div>
                             </div>
                             <div className="relative h-64 w-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-background-dark dark:to-[#0a2742] rounded-2xl mb-8 overflow-hidden flex items-center justify-center group">
-                                <img alt="Students collaborating" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaNyfbMaJqtr_VJ3Mkwa0fyJqh1EPpqou6EcW1CRKC9EUYgvqyL2FsLQdMR1383z2aem_NfqtgPtf9dPnfTwIxoUMazwVRrTGh0EwXDC0gS6VaG-0WZJvoWsN2K_WTye_G3742ik4htddcKPvP4dmdSdMLhrg2jnZSNLB5Oe0huaDCr7R33hKElV4myouUsHn-LrKlBEdT6iqqu3SjEs5ebDbiGk1c2hCrqkBAtedA8q7YvE5BdE3shYeiijRqVzuv0gg8pkj1fzKR"/>
+                                <img alt="Students collaborating" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaNyfbMaJqtr_VJ3Mkwa0fyJqh1EPpqou6EcW1CRKC9EUYgvqyL2FsLQdMR1383z2aem_NfqtgPtf9dPnfTwIxoUMazwVRrTGh0EwXDC0gS6VaG-0WZJvoWsN2K_WTye_G3742ik4htddcKPvP4dmdSdMLhrg2jnZSNLB5Oe0huaDCr7R33hKElV4myouUsHn-LrKlBEdT6iqqu3SjEs5ebDbiGk1c2hCrqkBAtedA8q7YvE5BdE3shYeiijRqVzuv0gg8pkj1fzKR" />
                                 <div className="absolute inset-0 bg-secondary/40 mix-blend-multiply"></div>
                                 <div className="relative z-10 text-center px-4">
                                     <span className="block text-white font-display font-black text-3xl mb-2 drop-shadow-lg">SEJA TRAINEE</span>
@@ -110,14 +112,13 @@ export const ProjectsEventsPage: React.FC = () => {
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {['Todos', 'Extensão', 'Eventos', 'Bootcamps'].map((cat) => (
-                            <button 
+                            <button
                                 key={cat}
                                 onClick={() => setFilter(cat)}
-                                className={`px-4 py-2 rounded-full font-semibold text-sm transition-all ${
-                                    filter === cat 
-                                    ? "bg-primary text-white shadow-md transform scale-105" 
+                                className={`px-4 py-2 rounded-full font-semibold text-sm transition-all ${filter === cat
+                                    ? "bg-primary text-white shadow-md transform scale-105"
                                     : "bg-white dark:bg-surface-dark text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary"
-                                }`}
+                                    }`}
                             >
                                 {cat}
                             </button>
@@ -128,8 +129,17 @@ export const ProjectsEventsPage: React.FC = () => {
                     {filteredProjects.map((item, i) => (
                         <article key={i} className="bg-white dark:bg-surface-dark rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group flex flex-col h-full animate-fade-in-up">
                             <div className="h-48 overflow-hidden relative">
+                                {!imagesLoaded[i] && (
+                                    <SkeletonLoader variant="image" className="absolute inset-0 w-full h-full" />
+                                )}
                                 <div className="absolute inset-0 bg-secondary/20 group-hover:bg-transparent transition-colors z-10"></div>
-                                <img alt={item.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" src={item.img} />
+                                <img
+                                    alt={item.title}
+                                    className={`w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 ${imagesLoaded[i] ? 'opacity-100' : 'opacity-0'
+                                        }`}
+                                    src={item.img}
+                                    onLoad={() => setImagesLoaded(prev => ({ ...prev, [i]: true }))}
+                                />
                                 <div className="absolute top-4 left-4 z-20">
                                     <span className={`${item.color} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide`}>{item.tag}</span>
                                 </div>

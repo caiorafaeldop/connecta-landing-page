@@ -1,36 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { FeatureItem, StatItem } from '../types';
+import { SkeletonLoader } from './SkeletonLoader';
 
 export const HomePage: React.FC = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
     const features: FeatureItem[] = [
-        {icon: "handshake", title: "Parcerias", desc: "Criar parcerias duradouras com empresas, trazendo demandas reais para dentro da universidade."},
-        {icon: "apartment", title: "Infraestrutura", desc: "Contribuir ativamente para a melhoria da infraestrutura e ambiente do Centro de Informática."},
-        {icon: "groups", title: "Integração", desc: "Integrar mercado, academia e sociedade através de rodas de conversa e eventos colaborativos."},
-        {icon: "lightbulb", title: "Inovação", desc: "Fomentar a cultura de inovação e empreendedorismo dentro do ambiente acadêmico."}
+        { icon: "handshake", title: "Parcerias", desc: "Criar parcerias duradouras com empresas, trazendo demandas reais para dentro da universidade." },
+        { icon: "apartment", title: "Infraestrutura", desc: "Contribuir ativamente para a melhoria da infraestrutura e ambiente do Centro de Informática." },
+        { icon: "groups", title: "Integração", desc: "Integrar mercado, academia e sociedade através de rodas de conversa e eventos colaborativos." },
+        { icon: "lightbulb", title: "Inovação", desc: "Fomentar a cultura de inovação e empreendedorismo dentro do ambiente acadêmico." }
     ];
 
     const stats: StatItem[] = [
-        {val: "+15", lab: "Parceiros"}, 
-        {val: "+40", lab: "Membros"}, 
-        {val: "+10", lab: "Projetos"}, 
-        {val: "UFPB", lab: "Base"}
+        { val: "+15", lab: "Parceiros" },
+        { val: "+40", lab: "Membros" },
+        { val: "+10", lab: "Projetos" },
+        { val: "UFPB", lab: "Base" }
     ];
 
-    // Image Slideshow Configuration
+    // Image Slideshow Configuration (Optimized URLs)
     const slideshowImages = [
         "https://lh3.googleusercontent.com/aida-public/AB6AXuC4a4ux36eMjzQgGsxMfCUSbgTdtXEbnHNuReK5tPCaaqYi-p_uZzWzF9XCGwrV51cKGacgQ5cDL5gyNff_4ngqzbGh4nNuDcA66pNzPCHvcT5Bi_Egw2AWkMeyH05YCeyJQoaM8Vfb7528D1Sk2Nwwcz-Y-bH5Qx1EInjMlgzzw2dD3rpqSalC23p4ADowF6se3BDrck_kV12I-n7u8JW2csXWQJXkD_LxdHBLzR4pM6HmBezsTdG30G7Sgz6m7SejGapZyuYjuUCv",
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1740",
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1742",
-        "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1740"
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=60&w=1200",
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=60&w=1200",
+        "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=60&w=1200"
     ];
 
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [imagesLoaded, setImagesLoaded] = useState<boolean[]>(new Array(slideshowImages.length).fill(false));
 
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slideshowImages.length);
         }, 4000); // Change slide every 4 seconds
         return () => clearInterval(timer);
+    }, []);
+
+    // Reduce artificial loading delay for faster perceived performance
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 400);
+        return () => clearTimeout(timer);
     }, []);
 
     // SVG Component for reusability within the file
@@ -47,7 +59,7 @@ export const HomePage: React.FC = () => {
 
     return (
         <div className="animate-fade-in pt-20">
-             <header className="relative overflow-hidden py-24 lg:py-32 border-b border-white/5 bg-background-light dark:bg-background-dark">
+            <header className="relative overflow-hidden py-24 lg:py-32 border-b border-white/5 bg-background-light dark:bg-background-dark">
                 {/* Floating Graphs Background */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     {/* 1. Top Left - Large, Primary */}
@@ -75,7 +87,7 @@ export const HomePage: React.FC = () => {
                 {/* Light Gradients */}
                 <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-600/5 rounded-full blur-3xl"></div>
-                
+
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-3xl mx-auto">
                         <span className="inline-flex items-center py-1 px-3 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-sm mb-6 tracking-wide uppercase">
@@ -100,28 +112,38 @@ export const HomePage: React.FC = () => {
                                 {slideshowImages.map((img, index) => (
                                     <div
                                         key={index}
-                                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                                            index === currentSlide ? 'opacity-100' : 'opacity-0'
-                                        }`}
+                                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+                                            }`}
                                     >
+                                        {!imagesLoaded[index] && (
+                                            <SkeletonLoader variant="image" className="absolute inset-0 w-full h-full" />
+                                        )}
                                         <img
                                             src={img}
                                             alt={`Slide ${index + 1}`}
-                                            className="w-full h-full object-cover"
+                                            className={`w-full h-full object-cover transition-opacity duration-500 ${imagesLoaded[index] ? 'opacity-100' : 'opacity-0'
+                                                }`}
+                                            loading={index === 0 ? "eager" : "lazy"}
+                                            onLoad={() => {
+                                                setImagesLoaded(prev => {
+                                                    const next = [...prev];
+                                                    next[index] = true;
+                                                    return next;
+                                                });
+                                            }}
                                         />
-                                         <div className="absolute inset-0 bg-secondary/30 mix-blend-multiply"></div>
+                                        <div className="absolute inset-0 bg-secondary/30 mix-blend-multiply"></div>
                                     </div>
                                 ))}
-                                
+
                                 {/* Navigation Dots */}
                                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
                                     {slideshowImages.map((_, idx) => (
                                         <button
                                             key={idx}
                                             onClick={() => setCurrentSlide(idx)}
-                                            className={`h-1.5 rounded-full transition-all duration-300 ${
-                                                idx === currentSlide ? 'bg-primary w-8' : 'bg-white/50 w-2 hover:bg-white'
-                                            }`}
+                                            className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide ? 'bg-primary w-8' : 'bg-white/50 w-2 hover:bg-white'
+                                                }`}
                                             aria-label={`Go to slide ${idx + 1}`}
                                         />
                                     ))}
@@ -152,29 +174,37 @@ export const HomePage: React.FC = () => {
             </section>
             <section className="py-20 bg-background-light dark:bg-background-dark relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {features.map((item, i) => (
-                            <div key={i} className="bg-white dark:bg-surface-dark p-8 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-primary/10 border border-gray-100 dark:border-gray-700/50 hover:-translate-y-2 transition-all duration-300 group">
-                                <div className="w-14 h-14 bg-blue-50 dark:bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
-                                    <span className="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">{item.icon}</span>
+                    {isLoading ? (
+                        <SkeletonLoader variant="feature-card" />
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {features.map((item, i) => (
+                                <div key={i} className="bg-white dark:bg-surface-dark p-8 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-primary/10 border border-gray-100 dark:border-gray-700/50 hover:-translate-y-2 transition-all duration-300 group animate-fade-in" style={{ animationDelay: `${i * 100}ms` }}>
+                                    <div className="w-14 h-14 bg-blue-50 dark:bg-white/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
+                                        <span className="material-symbols-outlined text-primary text-3xl group-hover:text-white transition-colors">{item.icon}</span>
+                                    </div>
+                                    <h3 className="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">{item.title}</h3>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{item.desc}</p>
                                 </div>
-                                <h3 className="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">{item.title}</h3>
-                                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{item.desc}</p>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
             <section className="py-16 bg-gradient-to-r from-secondary to-background-dark relative border-y border-white/5">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
-                        {stats.map((s, i) => (
-                            <div key={i} className="p-4">
-                                <div className="text-4xl lg:text-5xl font-display font-black text-white mb-2 tracking-tight">{s.val}</div>
-                                <div className="text-primary font-medium uppercase text-sm tracking-wider">{s.lab}</div>
-                            </div>
-                        ))}
-                    </div>
+                    {isLoading ? (
+                        <SkeletonLoader variant="stats" />
+                    ) : (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
+                            {stats.map((s, i) => (
+                                <div key={i} className="p-4 animate-fade-in" style={{ animationDelay: `${i * 100}ms` }}>
+                                    <div className="text-4xl lg:text-5xl font-display font-black text-white mb-2 tracking-tight">{s.val}</div>
+                                    <div className="text-primary font-medium uppercase text-sm tracking-wider">{s.lab}</div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
         </div>
