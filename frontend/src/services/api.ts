@@ -1,7 +1,6 @@
 import { Project, Event } from '../types/types';
 
-const API_BASE_URL = 'https://gamification-9x5p.onrender.com/api/v1/stats'; // Placeholder, change as needed
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const api = {
     getProjects: async (): Promise<Project[]> => {
         try {
