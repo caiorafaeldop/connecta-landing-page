@@ -60,6 +60,7 @@ export const NavBar: React.FC = () => {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-8 items-center">
                         <Link className={`font-display font-medium transition-colors ${isActive('/')}`} to="/">Início</Link>
+                        <Link className={`font-display font-medium transition-colors ${isActive('/team')}`} to="/team">Equipe</Link>
                         <Link className={`font-display font-medium transition-colors ${isActive('/projects')}`} to="/projects">Projetos & Eventos</Link>
                         <Link className={`font-display font-medium transition-colors ${isActive('/support')}`} to="/support">Apoie</Link>
 
@@ -117,6 +118,9 @@ export const NavBar: React.FC = () => {
                             <div className="px-4 pt-2 pb-6 space-y-1">
                                 <Link to="/" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-primary hover:bg-primary/10 transition-all">
                                     Início
+                                </Link>
+                                <Link to="/team" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-primary hover:bg-primary/10 transition-all">
+                                    Equipe
                                 </Link>
                                 <Link to="/projects" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-primary hover:bg-primary/10 transition-all">
                                     Projetos & Eventos
