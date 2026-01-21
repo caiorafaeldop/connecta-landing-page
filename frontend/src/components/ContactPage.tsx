@@ -60,7 +60,7 @@ export const ContactPage: React.FC = () => {
                                </div>
                                <h4 className="font-display font-bold text-lg dark:text-white mb-1">Email</h4>
                                <a className="text-slate-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors text-sm break-all" href="mailto:contato@connectaci.ufpb.br">
-                                   contato@connectaci.ufpb.br
+                                   connecta.ci.pb@gmail.com
                                </a>
                            </div>
                            <div className="bg-white/50 dark:bg-surface-dark/50 backdrop-blur-sm p-6 rounded-xl border border-gray-100 dark:border-white/5">
