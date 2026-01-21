@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { api } from '../services/api';
 import { FeatureItem, StatItem } from '../types/types';
 import { SkeletonLoader } from './SkeletonLoader';
 import image1 from '../assets/connecta_e_diretores.jpg';
@@ -17,12 +18,6 @@ export const HomePage: React.FC = () => {
         { icon: "lightbulb", title: "Inovação", desc: "Fomentar a cultura de inovação e empreendedorismo dentro do ambiente acadêmico." }
     ];
 
-    const stats: StatItem[] = [
-        { val: "+15", lab: "Parceiros" },
-        { val: "+40", lab: "Membros" },
-        { val: "+10", lab: "Projetos" },
-        { val: "UFPB", lab: "Base" }
-    ];
 
     // Image Slideshow Configuration (Optimized URLs)
     const slideshowImages = [
@@ -42,6 +37,33 @@ export const HomePage: React.FC = () => {
         }, 4000); // Change slide every 4 seconds
         return () => clearInterval(timer);
     }, []);
+
+    // Fetch Statistics
+    const [projectCount, setProjectCount] = useState(0);
+    const [memberCount, setMemberCount] = useState(0);
+    const [eventCount, setEventCount] = useState(0);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            // In a real scenario, you might want to run these in parallel
+            const projects = await api.getProjects();
+            const events = await api.getEvents();
+            const members = await api.getMembers();
+
+            setProjectCount(projects.length);
+            setEventCount(events.length);
+            setMemberCount(members.length);
+        };
+        fetchStats();
+    }, []);
+
+
+    const stats: StatItem[] = [
+        { val: "+15", lab: "Parceiros" },
+        { val: `+${memberCount > 0 ? memberCount : 40}`, lab: "Membros" }, // Fallback to 40 if 0 (or just show 0)
+        { val: `+${projectCount > 0 ? projectCount : 10}`, lab: "Projetos" },
+        { val: `+${eventCount > 0 ? eventCount : 5}`, lab: "Eventos" }
+    ];
 
     // Reduce artificial loading delay for faster perceived performance
     useEffect(() => {

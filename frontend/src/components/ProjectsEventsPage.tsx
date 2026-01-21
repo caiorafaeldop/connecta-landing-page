@@ -1,18 +1,47 @@
-import React, { useState } from 'react';
-import { Project } from '../types/types';
+import React, { useState, useEffect } from 'react';
+import { Project, Event } from '../types/types';
 import { SkeletonLoader } from './SkeletonLoader';
+import { api } from '../services/api';
 
 export const ProjectsEventsPage: React.FC = () => {
     const [filter, setFilter] = useState('Todos');
     const [imagesLoaded, setImagesLoaded] = useState<{ [key: number]: boolean }>({});
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [events, setEvents] = useState<Event[]>([]);
 
-    const projects: Project[] = [
-        { title: "Conexão Tech 2025", tag: "Eventos", color: "bg-blue-600", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDszC6l5BaV19NZhiJICzCaMMzjJv0Afy97MF-Q6DVQYzHIGelrDIE-6it2YBjmPYTlLHOZ4P4FN9VWBgI_I4xPhhpVLD53DXxSt0IEO58FPoEK5axlEkvSz3qUMXMkh_BvFBexcKHlBGBQHU2bFal62Zg7GvmodhyfRAPV6tJ8AFoG9w_bg7owV-O-x2w6QsgWofRHWPmbTupmAyGVrWpc4Ss796TFY5ptHF20PZElkfr_0O-0XnqfIWqQsz4BZ4iDY9Ysxx7eyoRs", desc: "Uma série de palestras com ex-alunos que hoje atuam em grandes empresas." },
-        { title: "Python para Dados", tag: "Bootcamps", color: "bg-emerald-500", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAQd7Zcs2jQTjb6OUJOCb-hOXv7LD01lAuSzSs3URjU32GPnE-Jkwb9KvINhrwHW2tJ0LIpr1XRnwYOwnbBoSiT3JCbQMls3LzP5AG4z26ttxVkUS3F3RgT35s1ZM4XpfD3h9piFaBye4WaPkeilvwektfovSDj-5UkjrktnAR2DoVsIs-RiXVdxnbcSvgqrLucYGNwq5Xh84wpVzG71g0K4tTZhVM-2GOC9mqzQO-bhBFKlsy0KGho7Q--o_ocFakhlF8n1Tb9M4x0", desc: "Capacitação técnica intensiva focada em bibliotecas como Pandas e NumPy." },
-        { title: "Inclusão Digital", tag: "Extensão", color: "bg-purple-500", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDLjbp6hTUx4PZ-QCQGsCFT-iiHbKKJAWvmXSpJuNRVjWdioljFHbHRgZ1NdBDtAiSPOMgWNsCz3KvF-sGm_g7o3sIBcBoyDQSaNvsePBT2Wi_RdbFSBqRpG78-P14pl_oX3VRN3Xisq5ZiXm93m_avtUjtm1WGnxM-WWaPqUwg5bxkUaDMfYCYQvRQibOKtR2XozrBznGrJN1X22JTswCdzKT4qJ61R7nrkQG73DX_QfArhYHVfnpOEFwbeiYJcyQdGRtmP_Y2T9tJ", desc: "Projeto contínuo onde alunos ensinam informática básica para idosos." }
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const apiProjects = await api.getProjects();
+                const apiEvents = await api.getEvents();
 
-    const filteredProjects = filter === 'Todos' ? projects : projects.filter(p => p.tag === filter);
+                // Map API projects to UI Project type
+                const mappedProjects: Project[] = apiProjects.map(p => ({
+                    id: p.id,
+                    title: p.title,
+                    description: p.description,
+                    status: p.status,
+                    coverUrl: p.coverUrl,
+                }));
+
+                // If API returns empty, keep some defaults or just show empty.
+                // For now, let's append default/static ones or just use API if available.
+                // Assuming we want to REPLACE with API data.
+                if (mappedProjects.length > 0) {
+                    setProjects(mappedProjects);
+                }
+
+                setEvents(apiEvents);
+
+            } catch (error) {
+                console.error("Failed to fetch data", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const filteredProjects = filter === 'Todos' ? projects : projects.filter(p => p.status === filter);
 
     return (
         <div className="animate-fade-in pt-20">
@@ -32,77 +61,6 @@ export const ProjectsEventsPage: React.FC = () => {
                 </div>
             </header>
 
-            {/* Processo Seletivo Section */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-gray-200 dark:border-gray-800">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    <div className="space-y-8 animate-fade-in-up">
-                        <div className="inline-flex items-center space-x-2 bg-primary/10 dark:bg-primary/20 px-4 py-1.5 rounded-full border border-primary/20">
-                            <span className="flex h-2.5 w-2.5 relative">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
-                            </span>
-                            <span className="text-primary font-bold text-sm tracking-wide uppercase">Aberto</span>
-                        </div>
-                        <div>
-                            <h2 className="font-display font-black text-4xl sm:text-5xl leading-tight text-slate-900 dark:text-white">
-                                Processo <br />
-                                <span className="text-primary bg-clip-text">Seletivo</span>
-                            </h2>
-                            <div className="mt-4 inline-block border-2 border-slate-900 dark:border-white px-6 py-2 rounded-lg">
-                                <span className="font-display font-bold text-xl tracking-widest text-slate-900 dark:text-white uppercase">Trainee 2025.2</span>
-                            </div>
-                        </div>
-                        <div className="space-y-6">
-                            {[
-                                { icon: "school", title: "Capacitação Técnica", desc: "Através de Bootcamps intensivos e minicursos práticos." },
-                                { icon: "folder_special", title: "Desenvolvimento de Portfólio", desc: "Construa projetos reais para mostrar ao mercado." },
-                                { icon: "groups", title: "Networking Exclusivo", desc: "Rodas de conversa com grandes nomes do mercado." }
-                            ].map((item, i) => (
-                                <div key={i} className="flex items-start space-x-4 group p-3 -ml-3 rounded-xl hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
-                                    <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary">
-                                        <span className="material-symbols-outlined text-sm">{item.icon}</span>
-                                    </div>
-                                    <p className="text-slate-600 dark:text-gray-300 leading-relaxed font-medium">
-                                        <span className="text-slate-900 dark:text-white font-bold block mb-1">{item.title}</span>
-                                        {item.desc}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="pt-4">
-                            <button
-                                onClick={() => alert("🎉 Redirecionando para inscrição...")}
-                                className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:bg-sky-400 transform hover:-translate-y-1 transition-all duration-300 text-center flex items-center justify-center gap-2 group">
-                                Inscrever-se Agora
-                                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="relative hidden lg:block">
-                        <div className="relative z-10 bg-white dark:bg-card-dark rounded-3xl p-8 shadow-2xl border border-gray-100 dark:border-gray-700 transform rotate-1 hover:rotate-0 transition-transform duration-500">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="bg-gray-100 dark:bg-background-dark p-3 rounded-2xl">
-                                    <span className="material-symbols-outlined text-4xl text-primary">hub</span>
-                                </div>
-                                <div className="text-right">
-                                    <h3 className="font-display font-bold text-xl text-slate-800 dark:text-white">Connecta CI</h3>
-                                    <p className="text-sm text-slate-500 dark:text-gray-400">Universidade Federal da Paraíba</p>
-                                </div>
-                            </div>
-                            <div className="relative h-64 w-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-background-dark dark:to-[#0a2742] rounded-2xl mb-8 overflow-hidden flex items-center justify-center group">
-                                <img alt="Students collaborating" className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaNyfbMaJqtr_VJ3Mkwa0fyJqh1EPpqou6EcW1CRKC9EUYgvqyL2FsLQdMR1383z2aem_NfqtgPtf9dPnfTwIxoUMazwVRrTGh0EwXDC0gS6VaG-0WZJvoWsN2K_WTye_G3742ik4htddcKPvP4dmdSdMLhrg2jnZSNLB5Oe0huaDCr7R33hKElV4myouUsHn-LrKlBEdT6iqqu3SjEs5ebDbiGk1c2hCrqkBAtedA8q7YvE5BdE3shYeiijRqVzuv0gg8pkj1fzKR" />
-                                <div className="absolute inset-0 bg-secondary/40 mix-blend-multiply"></div>
-                                <div className="relative z-10 text-center px-4">
-                                    <span className="block text-white font-display font-black text-3xl mb-2 drop-shadow-lg">SEJA TRAINEE</span>
-                                    <span className="inline-block px-3 py-1 bg-primary text-white text-xs font-bold rounded-full uppercase tracking-wider">Inscrições Abertas</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="absolute -top-10 -right-10 w-24 h-24 bg-primary rounded-full opacity-20 blur-xl"></div>
-                        <div className="absolute -bottom-5 -left-5 w-32 h-32 bg-blue-500 rounded-full opacity-20 blur-xl"></div>
-                    </div>
-                </div>
-            </section>
 
             <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
@@ -137,17 +95,17 @@ export const ProjectsEventsPage: React.FC = () => {
                                     alt={item.title}
                                     className={`w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 ${imagesLoaded[i] ? 'opacity-100' : 'opacity-0'
                                         }`}
-                                    src={item.img}
+                                    src={item.coverUrl}
                                     onLoad={() => setImagesLoaded(prev => ({ ...prev, [i]: true }))}
                                 />
                                 <div className="absolute top-4 left-4 z-20">
-                                    <span className={`${item.color} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide`}>{item.tag}</span>
+                                    <span className={`${item.status === 'active' ? 'bg-blue-600' : 'bg-gray-600'} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide`}>{item.status}</span>
                                 </div>
                             </div>
                             <div className="p-6 flex-1 flex flex-col">
                                 <div className="mb-4">
                                     <h4 className="text-xl font-display font-bold text-secondary dark:text-white mb-2 group-hover:text-primary transition-colors">{item.title}</h4>
-                                    <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">{item.desc}</p>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">{item.description}</p>
                                 </div>
                                 <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
                                     <button onClick={() => alert(`Detalhes sobre: ${item.title}`)} className="text-primary font-bold text-sm hover:underline">Saiba mais</button>
@@ -160,30 +118,42 @@ export const ProjectsEventsPage: React.FC = () => {
             <section className="py-16 bg-blue-50 dark:bg-secondary/40 border-y border-gray-200 dark:border-gray-800">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-10">
-                        <h3 className="text-2xl font-display font-bold text-secondary dark:text-white">Agenda Acadêmica</h3>
+                        <h3 className="text-2xl font-display font-bold text-secondary dark:text-white">Eventos</h3>
                         <p className="text-gray-500 dark:text-gray-400">Não perca as próximas datas importantes.</p>
                     </div>
                     <div className="space-y-4">
-                        <div className="bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center gap-4 border-l-4 border-primary">
-                            <div className="bg-primary/10 text-primary w-16 h-16 rounded-lg flex flex-col items-center justify-center flex-shrink-0">
-                                <span className="text-xs font-bold uppercase">Nov</span>
-                                <span className="text-2xl font-black">14</span>
-                            </div>
-                            <div className="flex-1">
-                                <h5 className="font-bold text-secondary dark:text-white text-lg">Encerramento Inscrições Trainee</h5>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">Processo Seletivo 2025.2</p>
-                            </div>
-                        </div>
-                        <div className="bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center gap-4 border-l-4 border-purple-500">
-                            <div className="bg-purple-500/10 text-purple-500 w-16 h-16 rounded-lg flex flex-col items-center justify-center flex-shrink-0">
-                                <span className="text-xs font-bold uppercase">Nov</span>
-                                <span className="text-2xl font-black">20</span>
-                            </div>
-                            <div className="flex-1">
-                                <h5 className="font-bold text-secondary dark:text-white text-lg">Workshop de ReactJS</h5>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">Laboratório 3 - Centro de Informática</p>
-                            </div>
-                        </div>
+                        {events.length > 0 ? (
+                            events.map(event => {
+                                const dateObj = new Date(event.date);
+                                const month = dateObj.toLocaleString('pt-BR', {
+                                    month: 'short',
+                                    timeZone: 'UTC',
+                                });
+                                const day = dateObj.getUTCDate();
+
+                                return (
+                                    <div key={event.id} className="bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm flex gap-4 border-l-4 border-primary">
+                                        <div className="bg-primary/10 text-primary w-16 h-16 rounded-lg flex flex-col items-center justify-center">
+                                            <span className="text-xs font-bold uppercase">{month}</span>
+                                            <span className="text-2xl font-black">{day}</span>
+                                        </div>
+                                        <div className="flex-1">
+                                            <h5 className="font-bold text-secondary dark:text-white text-lg">
+                                                {event.title}
+                                            </h5>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                {event.description}
+                                            </p>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p className="text-gray-500 dark:text-gray-400">
+                                Nenhum evento marcado.
+                            </p>
+                        )}
+
                     </div>
                 </div>
             </section>
