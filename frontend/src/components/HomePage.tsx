@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FeatureItem, StatItem } from '../types';
+import { FeatureItem, StatItem } from '../types/types';
 import { SkeletonLoader } from './SkeletonLoader';
+import image1 from '../assets/connecta_e_diretores.jpg';
+import image2 from '../assets/buszer.jpg';
+import image3 from '../assets/opi.jpg';
+import image4 from '../assets/visita_empadinha.png';
+import image5 from '../assets/visita_brascon.png';
 
 export const HomePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -21,10 +26,11 @@ export const HomePage: React.FC = () => {
 
     // Image Slideshow Configuration (Optimized URLs)
     const slideshowImages = [
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuC4a4ux36eMjzQgGsxMfCUSbgTdtXEbnHNuReK5tPCaaqYi-p_uZzWzF9XCGwrV51cKGacgQ5cDL5gyNff_4ngqzbGh4nNuDcA66pNzPCHvcT5Bi_Egw2AWkMeyH05YCeyJQoaM8Vfb7528D1Sk2Nwwcz-Y-bH5Qx1EInjMlgzzw2dD3rpqSalC23p4ADowF6se3BDrck_kV12I-n7u8JW2csXWQJXkD_LxdHBLzR4pM6HmBezsTdG30G7Sgz6m7SejGapZyuYjuUCv",
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=60&w=1200",
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=60&w=1200",
-        "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=60&w=1200"
+        image1,
+        image2,
+        image3,
+        image4,
+        image5
     ];
 
     const [currentSlide, setCurrentSlide] = useState(0);

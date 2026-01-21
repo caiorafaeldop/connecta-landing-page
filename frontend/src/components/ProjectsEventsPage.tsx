@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Project } from '../types';
+import { Project } from '../types/types';
 import { SkeletonLoader } from './SkeletonLoader';
 
 export const ProjectsEventsPage: React.FC = () => {
