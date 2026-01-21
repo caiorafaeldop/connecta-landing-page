@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecta CI - Plataforma Universitária</title>
+
+  <!-- Tailwind CSS (CDN is fine for simple static deployment) -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600&family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#29B6F6",
+            secondary: "#011627",
+            accent: "#E1F5FE",
+            "background-light": "#F0F4F8",
+            "background-dark": "#011224",
+            "surface-light": "#FFFFFF",
+            "surface-dark": "#0D2744",
+            "card-dark": "#051b33",
+          },
+          fontFamily: {
+            display: ["Montserrat", "Space Grotesk", "sans-serif"],
+            body: ["Open Sans", "Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.75rem",
+            "xl": "1rem",
+            "2xl": "1.5rem",
+          },
+          animation: {
+            'float': 'float 8s ease-in-out infinite',
+            'float-delayed': 'float 8s ease-in-out 4s infinite',
+            'float-slow': 'float 12s ease-in-out 2s infinite',
+            'fade-in': 'fadeIn 0.3s ease-in-out',
+            'slide-down': 'slideDown 0.3s ease-out',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(-10px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            }
+          }
+        },
+      },
+    };
+  </script>
+
+  <style>
+    .glass-effect {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #011224;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #29B6F6;
+      border-radius: 4px;
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "vite": "https://esm.sh/vite@^7.2.7",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.10.1",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+</head>
+
+<body
+  class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-gray-100 font-body transition-colors duration-300 antialiased selection:bg-primary selection:text-white">
+  <div id="root"></div>
+  <script type="module" src="src/main.tsx"></script>
+</body>
+
+</html>
