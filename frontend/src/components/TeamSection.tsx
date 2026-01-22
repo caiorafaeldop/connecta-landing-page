@@ -1,10 +1,10 @@
 import React from 'react';
-
+import { api } from '../services/api';
 interface TeamMember {
     id: number;
     name: string;
     role: string;
-    image: string;
+    avatarUrl: string;
     bio: string;
     social: {
         linkedin?: string;
@@ -13,55 +13,25 @@ interface TeamMember {
     };
 }
 
-const teamMembers: TeamMember[] = [
-    {
-        id: 1,
-        name: 'Ana Silva',
-        role: 'Tech Lead & Fullstack Developer',
-        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        bio: 'Apaixonada por arquitetura de software e mentoria de novos talentos. Lidera a equipe técnica da Connecta CI.',
-        social: {
-            linkedin: '#',
-            github: '#',
-            email: 'ana@example.com'
-        }
-    },
-    {
-        id: 2,
-        name: 'Carlos Oliveira',
-        role: 'Frontend Specialist',
-        image: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        bio: 'Especialista em React e UI/UX. Transforma designs complexos em interfaces fluidas e acessíveis.',
-        social: {
-            linkedin: '#',
-            github: '#'
-        }
-    },
-    {
-        id: 3,
-        name: 'Mariana Costa',
-        role: 'Backend Developer',
-        image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        bio: 'Focada em escalabilidade e performance. Cuida de toda a infraestrutura e APIs do sistema.',
-        social: {
-            linkedin: '#',
-            github: '#'
-        }
-    },
-    {
-        id: 4,
-        name: 'Pedro Santos',
-        role: 'Mobile Developer',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        bio: 'Desenvolvedor entusiasta de Flutter e React Native. Cria experiências mobile nativas incríveis.',
-        social: {
-            linkedin: '#',
-            github: '#'
-        }
-    }
-];
+const formatName = (name: string) => {
+    return name
+        .toLowerCase()
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};
 
 export const TeamSection: React.FC = () => {
+    const [members, setMembers] = React.useState<TeamMember[]>([]);
+
+    React.useEffect(() => {
+        const fetchMembers = async () => {
+            const data = await api.getMembers();
+            setMembers(data);
+        };
+        fetchMembers();
+    }, []);
+
     return (
         <section className="py-20 relative overflow-hidden">
             {/* Background Elements */}
@@ -84,9 +54,10 @@ export const TeamSection: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {teamMembers.map((member) => (
+                    {members
+                        .filter((member) => member.role !== 'ADMIN')
+                        .map((member) => (
                         <div key={member.id} className="group relative bg-surface-light dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-white/5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden">
-                            
                             {/* Card Header / Image Area */}
                             <div className="h-32 bg-gradient-to-br from-primary/20 to-blue-600/20 relative">
                                 <div className="absolute inset-0 bg-primary/10 group-hover:bg-primary/5 transition-colors"></div>
@@ -96,7 +67,7 @@ export const TeamSection: React.FC = () => {
                             <div className="absolute top-16 left-1/2 transform -translate-x-1/2">
                                 <div className="w-24 h-24 rounded-full border-4 border-white dark:border-surface-dark shadow-md overflow-hidden bg-gray-200">
                                     <img 
-                                        src={member.image} 
+                                        src={member.avatarUrl} 
                                         alt={member.name} 
                                         className="w-full h-full object-cover"
                                     />
@@ -106,14 +77,14 @@ export const TeamSection: React.FC = () => {
                             {/* Content */}
                             <div className="pt-12 pb-8 px-6 text-center">
                                 <h3 className="text-xl font-bold text-slate-900 dark:text-white font-display mb-1">
-                                    {member.name}
+                                    {formatName(member.name)}
                                 </h3>
-                                <p className="text-primary text-sm font-medium mb-4">{member.role}</p>
+
                                 <p className="text-slate-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">
                                     {member.bio}
                                 </p>
                                 
-                                {/* Social Links */}
+                                {/* 
                                 <div className="flex justify-center gap-3">
                                     {member.social.linkedin && (
                                         <a href={member.social.linkedin} className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-slate-600 dark:text-gray-400 hover:bg-blue-600 hover:text-white transition-all transform hover:scale-110">
@@ -127,7 +98,7 @@ export const TeamSection: React.FC = () => {
                                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                                         </a>
                                     )}
-                                </div>
+                                </div>*/}
                             </div>
                         </div>
                     ))}

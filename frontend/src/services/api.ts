@@ -1,42 +1,44 @@
 import { Project, Event } from '../types/types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+interface ApiResponse {
+    projects: Project[];
+    events: Event[];
+    users: any[];
+}
+
+let fetchPromise: Promise<ApiResponse> | null = null;
+
+const getData = (): Promise<ApiResponse> => {
+    if (!fetchPromise) {
+        fetchPromise = fetch(`${API_BASE_URL}`)
+            .then(async (response) => {
+                if (!response.ok) throw new Error('Failed to fetch data');
+                return response.json();
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+                // Return empty arrays structure in case of error to prevent crashes
+                return { projects: [], events: [], users: [] };
+            });
+    }
+    return fetchPromise;
+};
+
 export const api = {
     getProjects: async (): Promise<Project[]> => {
-        try {
-            const response = await fetch(`${API_BASE_URL}`);
-            const data = await response.json();
-
-            if (!response.ok) throw new Error('Failed to fetch projects');
-            return data.projects;
-        } catch (error) {
-            console.error('Error fetching projects:', error);
-            return [];
-        }
+        const data = await getData();
+        return data.projects || [];
     },
 
     getEvents: async (): Promise<Event[]> => {
-        try {
-            const response = await fetch(`${API_BASE_URL}`);
-            const data = await response.json();
-            if (!response.ok) throw new Error('Failed to fetch events');
-            return data.events;
-        } catch (error) {
-            console.error('Error fetching events:', error);
-            return [];
-        }
+        const data = await getData();
+        return data.events || [];
     },
 
-    // Assuming a similar endpoint for members/users since the user mentioned "quantidade de usuário"
     getMembers: async (): Promise<any[]> => {
-        try {
-            const response = await fetch(`${API_BASE_URL}`);
-            const data = await response.json();
-            if (!response.ok) throw new Error('Failed to fetch users');
-            return data.users;
-        } catch (error) {
-            console.error('Error fetching members:', error);
-            return [];
-        }
+        const data = await getData();
+        return data.users || [];
     }
 };
