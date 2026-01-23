@@ -5,8 +5,9 @@ import { SkeletonLoader } from './SkeletonLoader';
 import image1 from '../assets/connecta_e_diretores.jpg';
 import image2 from '../assets/buszer.jpg';
 import image3 from '../assets/opi.jpg';
-import image4 from '../assets/visita_empadinha.png';
-import image5 from '../assets/visita_brascon.png';
+import image4 from '../assets/visita_empadinha.jpg';
+import image5 from '../assets/visita_brascon.jpg';
+import image6 from '../assets/equipe.jpg';
 
 export const HomePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +26,8 @@ export const HomePage: React.FC = () => {
         image2,
         image3,
         image4,
-        image5
+        image5,
+        image6
     ];
 
     const [currentSlide, setCurrentSlide] = useState(0);
