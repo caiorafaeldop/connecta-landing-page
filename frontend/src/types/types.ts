@@ -9,10 +9,13 @@ export interface StatItem {
   lab: string;
 }
 
+export type ProjectType = 'Interno' | 'Extensao' | 'Empresa' | 'Pesquisa' | 'Outro';
+
 export interface Project {
   id: string;
   title: string;
   status: string;
+  type: ProjectType;
   coverUrl: string;
   description: string;
 }
