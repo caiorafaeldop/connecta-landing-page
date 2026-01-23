@@ -61,7 +61,7 @@ export const Footer: React.FC = () => (
                         </li>
                         <li className="flex items-center gap-2">
                             <span className="material-icons text-primary text-sm">email</span>
-                            <span>contato@connectaci.com</span>
+                            <span>connecta.ci.pb@gmail.com</span>
                         </li>
                     </ul>
                 </div>
