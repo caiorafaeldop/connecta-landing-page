@@ -27,3 +27,15 @@ export interface Event {
   date: string;
   type: string;
 }
+
+export interface EmailData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export interface EmailResponse {
+  success: boolean;
+  message: string;
+}

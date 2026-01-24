@@ -1,20 +1,35 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Connecta Landing Page (Frontend)
 
-# Run and deploy your AI Studio app
+Interface moderna e responsiva para a Connecta CI, construída com React e Vite.
 
-This contains everything you need to run your app locally.
+## Tecnologias
 
-View your app in AI Studio: https://ai.studio/apps/drive/1XQ5aqNOQnj-PGDPjp9t3OzThzM_ah1W2
+*   React
+*   Vite
+*   TailwindCSS
+*   TypeScript
 
-## Run Locally
+## Instalação e Execução
 
-**Prerequisites:**  Node.js
+1.  Instale as dependências:
+    ```bash
+    npm install
+    ```
 
+2.  Inicie o servidor de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+A aplicação estará disponível em `http://localhost:5173`.
+
+## Integração com Backend
+
+O formulário de contato desta aplicação envia requisições para `http://localhost:3001/api/send-email`.
+Certifique-se de que o backend esteja rodando na porta 3001 para que o envio de emails funcione corretamente.
+
+## Estrutura de Pastas
+
+*   `src/components`: Componentes reutilizáveis (Hero, ContactPage, etc).
+*   `src/assets`: Imagens e arquivos estáticos.
+*   `src/App.tsx`: Componente raiz.

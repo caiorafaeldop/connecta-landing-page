@@ -1,6 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { sendEmail } from '../services/emailService';
 
 export const ContactPage: React.FC = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: 'partnership',
+        message: ''
+    });
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [feedbackMessage, setFeedbackMessage] = useState('');
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('loading');
+        setFeedbackMessage('');
+
+        try {
+            const result = await sendEmail(formData);
+
+            if (result.success) {
+                setStatus('success');
+                setFeedbackMessage('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+                setFormData({ name: '', email: '', subject: 'partnership', message: '' });
+                // Limpar mensagem de sucesso após alguns segundos
+                setTimeout(() => {
+                    setStatus('idle');
+                    setFeedbackMessage('');
+                }, 5000);
+            } else {
+                setStatus('error');
+                setFeedbackMessage(result.message || 'Erro ao enviar mensagem.');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            setStatus('error');
+            setFeedbackMessage('Erro inesperado ao enviar mensagem. Tente novamente.');
+        }
+    };
+
+
     return (
         <main className="flex-grow relative pt-20 animate-fade-in">
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -99,34 +142,88 @@ export const ContactPage: React.FC = () => {
                     <div className="bg-surface-light dark:bg-surface-dark p-8 md:p-10 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/5 relative z-20" id="form">
                         <h3 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">Envie uma mensagem</h3>
                         <p className="text-slate-500 dark:text-gray-400 mb-8 text-sm">Preencha o formulário abaixo e entraremos em contato o mais breve possível.</p>
-                        <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); alert("Mensagem enviada com sucesso!"); }}>
+                        <form className="space-y-6" onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-1" htmlFor="name">Nome</label>
-                                    <input className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-background-dark border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow outline-none" id="name" name="name" placeholder="Seu nome" required type="text" />
+                                    <input
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-background-dark border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow outline-none"
+                                        id="name"
+                                        name="name"
+                                        placeholder="Seu nome"
+                                        required
+                                        type="text"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                    />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-1" htmlFor="email">E-mail</label>
-                                    <input className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-background-dark border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow outline-none" id="email" name="email" placeholder="seu@email.com" required type="email" />
+                                    <input
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-background-dark border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow outline-none"
+                                        id="email"
+                                        name="email"
+                                        placeholder="seu@email.com"
+                                        required
+                                        type="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                    />
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-1" htmlFor="subject">Assunto</label>
-                                <select className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-background-dark border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow outline-none" id="subject" name="subject">
+                                <select
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-background-dark border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow outline-none"
+                                    id="subject"
+                                    name="subject"
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                >
                                     <option value="partnership">Parceria Empresarial</option>
-                                    <option value="doubt">Dúvida sobre Processo Seletivo</option>
                                     <option value="event">Proposta de Evento</option>
                                     <option value="other">Outro</option>
                                 </select>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-1" htmlFor="message">Mensagem</label>
-                                <textarea className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-background-dark border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow outline-none" id="message" name="message" placeholder="Como podemos ajudar?" required rows={4}></textarea>
+                                <textarea
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-background-dark border border-gray-300 dark:border-white/10 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow outline-none"
+                                    id="message"
+                                    name="message"
+                                    placeholder="Como podemos ajudar?"
+                                    required
+                                    rows={4}
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                ></textarea>
                             </div>
+
+                            {/* Feedback Message */}
+                            {status === 'success' && (
+                                <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 flex items-center animate-fade-in">
+                                    <span className="material-icons-outlined mr-2">check_circle</span>
+                                    <span>{feedbackMessage}</span>
+                                </div>
+                            )}
+
+                            {status === 'error' && (
+                                <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 flex items-center animate-fade-in">
+                                    <span className="material-icons-outlined mr-2">error</span>
+                                    <span>{feedbackMessage}</span>
+                                </div>
+                            )}
+
                             <div className="pt-2">
-                                <button className="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3.5 px-6 rounded-lg shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2" type="submit">
-                                    Enviar Mensagem
-                                    <span className="material-icons-outlined text-lg">send</span>
+                                <button
+                                    className="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3.5 px-6 rounded-lg shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    type="submit"
+                                    disabled={status === 'loading' || status === 'success'}
+                                >
+                                    {status === 'loading' ? 'Enviando...' : (status === 'success' ? 'Enviado!' : 'Enviar Mensagem')}
+                                    <span className="material-icons-outlined text-lg">
+                                        {status === 'loading' ? 'hourglass_empty' : (status === 'success' ? 'check' : 'send')}
+                                    </span>
                                 </button>
                             </div>
                         </form>
@@ -136,3 +233,4 @@ export const ContactPage: React.FC = () => {
         </main>
     );
 };
+
