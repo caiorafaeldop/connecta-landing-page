@@ -16,7 +16,6 @@ Para rodar o projeto completo, você precisará configurar e iniciar tanto o fro
 ### Pré-requisitos
 
 *   Node.js instalado.
-*   Uma conta de email (Gmail recomendado) com "Senha de Aplicativo" gerada para envio de emails via SMTP.
 
 ### Passo a Passo Rápido
 
