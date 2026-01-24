@@ -1,16 +1,8 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { env } from '../config/env';
 import { EmailData } from '../types/email.types';
 
-const transporter = nodemailer.createTransport({
-    host: env.email.host,
-    port: env.email.port,
-    secure: env.email.secure,
-    auth: {
-        user: env.email.user,
-        pass: env.email.pass,
-    },
-});
+const resend = new Resend(env.resendKey);
 
 export const sendEmail = async (data: EmailData): Promise<void> => {
     const subjectMap: Record<string, string> = {
@@ -21,12 +13,13 @@ export const sendEmail = async (data: EmailData): Promise<void> => {
 
     const formattedSubject = subjectMap[data.subject] || data.subject;
 
-    await transporter.sendMail({
-        from: env.email.from,
-        to: env.email.to,
-        replyTo: data.email,
-        subject: `[Site Contact] ${formattedSubject} - ${data.name}`,
-        text: `
+    try {
+        await resend.emails.send({
+            from: env.emailFrom,
+            to: env.emailTo,
+            reply_to: data.email,
+            subject: `[Site Contact] ${formattedSubject} - ${data.name}`,
+            text: `
         Nome: ${data.name}
         Email: ${data.email}
         Assunto: ${formattedSubject}
@@ -34,7 +27,7 @@ export const sendEmail = async (data: EmailData): Promise<void> => {
         Mensagem:
         ${data.message}
       `,
-        html: `
+            html: `
         <h3>Nova mensagem do site</h3>
         <p><strong>Nome:</strong> ${data.name}</p>
         <p><strong>Email:</strong> ${data.email}</p>
@@ -43,6 +36,10 @@ export const sendEmail = async (data: EmailData): Promise<void> => {
         <p><strong>Mensagem:</strong></p>
         <p>${data.message.replace(/\n/g, '<br>')}</p>
       `,
-    });
+        });
+    } catch (error) {
+        console.error('Resend API Error:', error);
+        throw new Error('Failed to send email via Resend');
+    }
 };
 
