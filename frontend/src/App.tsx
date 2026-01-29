@@ -4,9 +4,10 @@ import { NavBar } from './components/NavBar';
 import { Footer } from './components/Footer';
 import { HomePage } from './components/HomePage';
 import { ProjectsEventsPage } from './components/ProjectsEventsPage';
-import { SupportPage } from './components/SupportPage';
+//import { SupportPage } from './components/SupportPage';
 import { ContactPage } from './components/ContactPage';
 import { TeamPage } from './components/TeamPage';
+import { PortfolioPage } from './components/PortfolioPage';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -27,9 +28,10 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/projects" element={<ProjectsEventsPage />} />
-                    <Route path="/support" element={<SupportPage />} />
+                    {/*<Route path="/support" element={<SupportPage />} />*/}
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/team" element={<TeamPage />} />
+                    <Route path="/portfolio" element={<PortfolioPage />} />
                 </Routes>
                 <Footer />
             </div>

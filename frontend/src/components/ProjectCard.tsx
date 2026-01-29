@@ -1,14 +1,6 @@
 import { useState } from 'react';
 import { SkeletonLoader } from './SkeletonLoader';
-
-interface Project {
-    id: string;
-    title: string;
-    description: string;
-    coverUrl: string;
-    type: string;
-    status: string;
-}
+import { Project } from '../types/types';
 
 interface Props {
     project: Project;

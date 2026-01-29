@@ -39,3 +39,13 @@ export interface EmailResponse {
   success: boolean;
   message: string;
 }
+
+export interface PortfolioProject {
+  id: string;
+  title: string;
+  description: string;
+  coverUrl: string;
+  technologies: string[];
+  githubUrl: string | null;
+  demoUrl: string | null;
+}
