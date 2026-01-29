@@ -38,6 +38,7 @@ Certifique-se de que o backend esteja rodando na porta 3001 para que o envio de 
 
 *   `src/data/portfolio.json`: Dados dos projetos.
 
+```
 Exemplo de projeto:
 [
     {
@@ -54,3 +55,4 @@ Exemplo de projeto:
         "demoUrl": "https://demo-gestao.connecta.com"
     }
 ]
+```
