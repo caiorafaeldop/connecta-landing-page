@@ -61,8 +61,9 @@ export const NavBar: React.FC = () => {
                     <div className="hidden md:flex space-x-8 items-center">
                         <Link className={`font-display font-medium transition-colors ${isActive('/')}`} to="/">Início</Link>
                         <Link className={`font-display font-medium transition-colors ${isActive('/team')}`} to="/team">Equipe</Link>
+                        <Link className={`font-display font-medium transition-colors ${isActive('/portfolio')}`} to="/portfolio">Portfólio</Link>
                         <Link className={`font-display font-medium transition-colors ${isActive('/projects')}`} to="/projects">Projetos & Eventos</Link>
-                        <Link className={`font-display font-medium transition-colors ${isActive('/support')}`} to="/support">Apoie</Link>
+                        {/*<Link className={`font-display font-medium transition-colors ${isActive('/support')}`} to="/support">Apoie</Link>*/}
 
                         <Link to="/contact" className="bg-primary hover:bg-sky-400 text-white px-5 py-2.5 rounded-full font-bold shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5">
                             Participe
@@ -122,12 +123,15 @@ export const NavBar: React.FC = () => {
                                 <Link to="/team" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-primary hover:bg-primary/10 transition-all">
                                     Equipe
                                 </Link>
+                                <Link to="/portfolio" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-primary hover:bg-primary/10 transition-all">
+                                    Portfólio
+                                </Link>
                                 <Link to="/projects" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-primary hover:bg-primary/10 transition-all">
                                     Projetos & Eventos
                                 </Link>
-                                <Link to="/support" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-primary hover:bg-primary/10 transition-all">
+                                {/*<Link to="/support" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-primary hover:bg-primary/10 transition-all">
                                     Apoie
-                                </Link>
+                                </Link>*/}
                                 <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold bg-primary/10 text-primary dark:text-primary hover:bg-primary hover:text-white transition-all">
                                     Participe
                                 </Link>
