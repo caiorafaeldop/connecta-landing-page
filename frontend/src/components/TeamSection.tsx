@@ -21,6 +21,10 @@ const formatName = (name: string) => {
         .join(' ');
 };
 
+const hasValidProfile = (member: TeamMember) => {
+    return member.role !== 'ADMIN' && member.avatarUrl && member.avatarUrl.trim() !== '';
+};
+
 export const TeamSection: React.FC = () => {
     const [members, setMembers] = React.useState<TeamMember[]>([]);
 
@@ -55,7 +59,7 @@ export const TeamSection: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {members
-                        .filter((member) => member.role !== 'ADMIN' && member.avatarUrl && member.avatarUrl.trim() !== '')
+                        .filter(hasValidProfile)
                         .map((member) => (
                         <div key={member.id} className="group relative bg-surface-light dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-white/5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden">
                             {/* Card Header / Image Area */}
