@@ -61,7 +61,7 @@ export const HomePage: React.FC = () => {
 
 
     const stats: StatItem[] = [
-        { val: "+15", lab: "Parceiros" },
+        /*{ val: "+15", lab: "Parceiros" },*/ // Remoção temporária
         { val: `+${memberCount > 0 ? memberCount : 40}`, lab: "Membros" }, // Fallback to 40 if 0 (or just show 0)
         { val: `+${projectCount > 0 ? projectCount : 10}`, lab: "Projetos" },
         { val: `+${eventCount > 0 ? eventCount : 5}`, lab: "Eventos" }
