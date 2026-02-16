@@ -7,6 +7,7 @@ export interface FeatureItem {
 export interface StatItem {
   val: string;
   lab: string;
+  link: string;
 }
 
 export type ProjectType = 'Interno' | 'Extensao' | 'Empresa' | 'Pesquisa' | 'Outro';

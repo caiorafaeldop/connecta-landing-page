@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { FeatureItem, StatItem } from '../types/types';
 import { SkeletonLoader } from './SkeletonLoader';
+import { Link } from "react-router-dom";
 import image1 from '../assets/connecta_e_diretores.jpg';
 import image2 from '../assets/buszer.jpg';
 import image3 from '../assets/opi.jpg';
@@ -61,11 +62,28 @@ export const HomePage: React.FC = () => {
 
 
     const stats: StatItem[] = [
-        /*{ val: "+15", lab: "Parceiros" },*/ // Remoção temporária
-        { val: `+${memberCount > 0 ? memberCount : 40}`, lab: "Membros" }, // Fallback to 40 if 0 (or just show 0)
-        { val: `+${projectCount > 0 ? projectCount : 10}`, lab: "Projetos" },
-        { val: `+${eventCount > 0 ? eventCount : 5}`, lab: "Eventos" }
+        /*{
+            val: "+15",
+            lab: "Parceiros",
+            link: "/parceiros"
+        },*/
+        {
+            val: `+${memberCount > 0 ? memberCount : 40}`,
+            lab: "Membros",
+            link: "/team"
+        },
+        {
+            val: `+${projectCount > 0 ? projectCount : 10}`,
+            lab: "Projetos",
+            link: "/projects"
+        },
+        {
+            val: `+${eventCount > 0 ? eventCount : 5}`,
+            lab: "Eventos",
+            link: "/projects"
+        }
     ];
+
 
     // Reduce artificial loading delay for faster perceived performance
     useEffect(() => {
@@ -228,10 +246,15 @@ export const HomePage: React.FC = () => {
                     ) : (
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
                             {stats.map((s, i) => (
-                                <div key={i} className="p-4 animate-fade-in" style={{ animationDelay: `${i * 100}ms` }}>
+                                <Link
+                                    to={s.link}
+                                    key={i}
+                                    className="p-4 animate-fade-in block hover:scale-105 transition-transform duration-300 cursor-pointer"
+                                    style={{ animationDelay: `${i * 100}ms` }}
+                                >
                                     <div className="text-4xl lg:text-5xl font-display font-black text-white mb-2 tracking-tight">{s.val}</div>
                                     <div className="text-primary font-medium uppercase text-sm tracking-wider">{s.lab}</div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     )}
