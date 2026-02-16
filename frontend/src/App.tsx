@@ -3,11 +3,12 @@ import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { NavBar } from './components/NavBar';
 import { Footer } from './components/Footer';
 import { HomePage } from './components/HomePage';
-import { ProjectsEventsPage } from './components/ProjectsEventsPage';
+import { ProjectsPage } from './components/ProjectsPage';
 //import { SupportPage } from './components/SupportPage';
 import { ContactPage } from './components/ContactPage';
 import { TeamPage } from './components/TeamPage';
 import { PortfolioPage } from './components/PortfolioPage';
+import { EventsPage } from './components/EventsPage';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -27,7 +28,8 @@ const App: React.FC = () => {
                 <NavBar />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/projects" element={<ProjectsEventsPage />} />
+                    <Route path="/projects" element={<ProjectsPage />} />
+                    <Route path="/events" element={<EventsPage />} />
                     {/*<Route path="/support" element={<SupportPage />} />*/}
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/team" element={<TeamPage />} />

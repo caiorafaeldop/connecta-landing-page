@@ -80,7 +80,7 @@ export const HomePage: React.FC = () => {
         {
             val: `+${eventCount > 0 ? eventCount : 5}`,
             lab: "Eventos",
-            link: "/projects"
+            link: "/events"
         }
     ];
 
