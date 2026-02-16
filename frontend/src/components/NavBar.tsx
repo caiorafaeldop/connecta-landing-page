@@ -63,7 +63,7 @@ export const NavBar: React.FC = () => {
                         <Link className={`font-display font-medium transition-colors ${isActive('/team')}`} to="/team">Equipe</Link>
                         <Link className={`font-display font-medium transition-colors ${isActive('/portfolio')}`} to="/portfolio">Portfólio</Link>
                         <Link className={`font-display font-medium transition-colors ${isActive('/projects')}`} to="/projects">Projetos</Link>
-                        <Link className={`font-display font-medium transition-colors ${isActive('/events')}`} to="/projects">Eventos</Link>
+                        <Link className={`font-display font-medium transition-colors ${isActive('/events')}`} to="/events">Eventos</Link>
                         {/*<Link className={`font-display font-medium transition-colors ${isActive('/support')}`} to="/support">Apoie</Link>*/}
 
                         <Link to="/contact" className="bg-primary hover:bg-sky-400 text-white px-5 py-2.5 rounded-full font-bold shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5">
