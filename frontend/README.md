@@ -56,3 +56,36 @@ Exemplo de projeto:
     }
 ]
 ```
+
+## Equipe
+
+*   `src/data/teamHierarchy.json`: Configuração da hierarquia e cargos do time.
+
+### Estrutura do JSON
+
+O arquivo é dividido em duas partes principais:
+
+1.  **`roleDefinitions`**: Define os cargos disponíveis, sua ordem de exibição e o selo (label) que aparecerá no site.
+    *   `id`: Identificador único do cargo (ex: `PRESIDENTE`).
+    *   `label`: Nome exibido no site.
+    *   `order`: Ordem de prioridade na exibição (menor número aparece primeiro).
+
+2.  **`memberMapping`**: Associa o nome do membro (retornado pela API) ao seu respectivo cargo (`id`).
+    *   A chave deve ser o nome exato retornado pela API.
+    *   O valor deve ser um `id` definido em `roleDefinitions`.
+
+### Exemplo de Configuração
+
+```json
+{
+  "roleDefinitions": [
+    { "id": "PRESIDENTE", "label": "Presidente", "order": 1 },
+    { "id": "MEMBRO", "label": "Membro", "order": 7 }
+  ],
+  "memberMapping": {
+    "Pedro Falconi": "PRESIDENTE",
+    "Nathan Nóbrega": "MEMBRO"
+  }
+}
+```
+

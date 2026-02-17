@@ -1,0 +1,47 @@
+{
+  "roleDefinitions": [
+    {
+      "id": "PRESIDENTE",
+      "label": "Presidente",
+      "order": 1
+    },
+    {
+      "id": "VICE_PRESIDENTE",
+      "label": "Vice presidente",
+      "order": 2
+    },
+    {
+      "id": "DIRETOR_PROJETOS",
+      "label": "Diretor de projetos",
+      "order": 3
+    },
+    {
+      "id": "SECRETARIO",
+      "label": "Secretario",
+      "order": 4
+    },
+    {
+      "id": "FINANCEIRO",
+      "label": "Financeiro",
+      "order": 5
+    },
+    {
+      "id": "DIRETOR_MARKETING",
+      "label": "Diretor de Marketing",
+      "order": 6
+    },
+    {
+      "id": "MEMBRO",
+      "label": "Membro",
+      "order": 7
+    }
+  ],
+  "memberMapping": {
+    "Pedro Falconi": "PRESIDENTE",
+    "Davi  Alves": "VICE_PRESIDENTE",
+    "Caio Rafael": "DIRETOR_PROJETOS",
+    "Gabriel Ribeiro": "SECRETARIO",
+    "Renan Godin": "FINANCEIRO",
+    "Deivily Breno Silva Carneiro": "DIRETOR_MARKETING"
+  }
+}
