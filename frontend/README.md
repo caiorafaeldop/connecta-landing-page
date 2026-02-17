@@ -30,8 +30,11 @@ Certifique-se de que o backend esteja rodando na porta 3001 para que o envio de 
 
 ## Estrutura de Pastas
 
-*   `src/components`: Componentes reutilizáveis (Hero, ContactPage, etc).
-*   `src/assets`: Imagens e arquivos estáticos.
+*   `src/components`: Componentes reutilizáveis e páginas;
+*   `src/assets`: Imagens e arquivos estáticos;
+*   `src/data`: Arquivos JSON para portifolio e equipe;
+*   `src/service`: Comunicação com API e Backend;
+*   `src/types`: Interfaces utilizadas no projeto;
 *   `src/App.tsx`: Componente raiz.
 
 ## Portfolio
