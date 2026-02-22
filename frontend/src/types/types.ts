@@ -50,3 +50,15 @@ export interface PortfolioProject {
   githubUrl: string | null;
   demoUrl: string | null;
 }
+
+export interface TeamMember {
+  id: number;
+  name: string;
+  role: string;
+  avatarUrl: string;
+  bio?: string;
+  roleLabel?: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  email?: string;
+}

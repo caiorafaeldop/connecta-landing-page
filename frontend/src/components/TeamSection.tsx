@@ -1,20 +1,8 @@
 import React from 'react';
 import { api } from '../services/api';
 import teamHierarchy from '../data/teamHierarchy.json';
-
-interface TeamMember {
-    id: number;
-    name: string;
-    role: string;
-    avatarUrl: string;
-    bio: string;
-    roleLabel?: string;
-    social: {
-        linkedin?: string;
-        github?: string;
-        email?: string;
-    };
-}
+import { Github, Linkedin } from "lucide-react";
+import { TeamMember } from '../types/types';
 
 const formatName = (name: string) => {
     return name
@@ -146,9 +134,28 @@ export const TeamSection: React.FC = () => {
                                                 {member.roleLabel}
                                             </p>
 
-                                            <p className="text-slate-500 dark:text-gray-400 text-sm leading-relaxed">
-                                                {member.bio}
-                                            </p>
+                                            {/* Social Icons */}
+                                            <div className="flex justify-center gap-4 mt-3">
+
+                                                <a
+                                                    href={member?.githubUrl || ""}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-slate-500 hover:text-black dark:hover:text-white transition-colors"
+                                                >
+                                                    <Github size={20} />
+                                                </a>
+
+                                                <a
+                                                    href={member?.linkedinUrl || ""}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-slate-500 hover:text-blue-600 transition-colors"
+                                                >
+                                                    <Linkedin size={20} />
+                                                </a>
+
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
@@ -192,6 +199,28 @@ export const TeamSection: React.FC = () => {
                                             <p className="text-primary font-semibold text-sm mb-2">
                                                 {member.roleLabel}
                                             </p>
+
+                                            {/* Social Icons */}
+                                            <div className="flex justify-center gap-4 mt-3">
+                                                <a
+                                                    href={member.githubUrl || ""}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-slate-500 hover:text-black dark:hover:text-white transition-colors"
+                                                >
+                                                    <Github size={20} />
+                                                </a>
+
+                                                <a
+                                                    href={member.linkedinUrl || ""}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-slate-500 hover:text-blue-600 transition-colors"
+                                                >
+                                                    <Linkedin size={20} />
+                                                </a>
+
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
