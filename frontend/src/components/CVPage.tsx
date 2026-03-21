@@ -26,6 +26,31 @@ export const CVPage: React.FC = () => {
         fetchProfile();
     }, [userId]);
 
+    useEffect(() => {
+        let isDarkBeforePrint = false;
+
+        const handleBeforePrint = () => {
+            isDarkBeforePrint = document.documentElement.classList.contains('dark');
+            if (isDarkBeforePrint) {
+                document.documentElement.classList.remove('dark');
+            }
+        };
+
+        const handleAfterPrint = () => {
+            if (isDarkBeforePrint) {
+                document.documentElement.classList.add('dark');
+            }
+        };
+
+        window.addEventListener('beforeprint', handleBeforePrint);
+        window.addEventListener('afterprint', handleAfterPrint);
+
+        return () => {
+            window.removeEventListener('beforeprint', handleBeforePrint);
+            window.removeEventListener('afterprint', handleAfterPrint);
+        };
+    }, []);
+
     const handlePrint = () => {
         window.print();
     };
