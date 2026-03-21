@@ -81,9 +81,9 @@ export const CVPage: React.FC = () => {
                     </div>
 
                     <div className="px-6 sm:px-10 pb-8 sm:pb-12 relative">
-                        <div className="flex flex-col sm:flex-row gap-6 sm:items-end -mt-20 sm:-mt-24 mb-6">
+                        <div className="flex flex-row gap-4 sm:gap-6 items-end -mt-16 sm:-mt-24 mb-6">
                             {/* Avatar */}
-                            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl border-4 border-white dark:border-slate-800 shadow-xl overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0 print:border-gray-200 print:w-32 print:h-32">
+                            <div className="w-24 h-24 sm:w-40 sm:h-40 rounded-2xl sm:rounded-3xl border-4 border-white dark:border-slate-800 shadow-xl overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0 print:border-gray-200 print:w-32 print:h-32">
                                 {profile.avatarUrl ? (
                                     <img src={profile.avatarUrl} alt={profile.name} className="w-full h-full object-cover" />
                                 ) : (
@@ -94,20 +94,21 @@ export const CVPage: React.FC = () => {
                             </div>
 
                             {/* Main Info */}
-                            <div className="flex-1 pt-4 sm:pt-0 print:pt-4">
-                                <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white mb-2 leading-tight">
+                            <div className="flex-1 min-w-0 pb-1 sm:pb-0 print:pt-4">
+                                <h1 className="text-2xl sm:text-5xl font-black text-slate-900 dark:text-white mb-1 sm:mb-2 leading-tight break-words">
                                     {profile.name}
                                 </h1>
                                 {profile.course && (
-                                    <div className="flex items-center gap-2 text-primary font-bold text-lg mb-3">
-                                        <BookOpen size={20} />
-                                        {profile.course}
+                                    <div className="flex items-center gap-1.5 sm:gap-2 text-primary font-semibold sm:font-bold text-sm sm:text-lg mb-2 sm:mb-3">
+                                        <BookOpen size={16} className="shrink-0" />
+                                        <span className="leading-snug">{profile.course}</span>
                                     </div>
                                 )}
                                 
-                                {/* Points Badge for Print / Mobile context if needed */}
-                                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm font-bold print:bg-transparent print:px-0">
-                                    <Star size={16} className="text-yellow-500" />
+                                {/* Level / Points Badge */}
+                                <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-xs sm:text-sm font-bold print:bg-transparent print:px-0">
+                                    <Star size={14} className="text-yellow-500 sm:hidden shrink-0" />
+                                    <Star size={16} className="text-yellow-500 hidden sm:inline shrink-0" />
                                     <span>{profile.connectaPoints || 0} Connecta Points</span>
                                 </div>
                             </div>
@@ -164,27 +165,6 @@ export const CVPage: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Achievements Box */}
-                        {profile.userAchievements && profile.userAchievements.length > 0 && (
-                            <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700 print:shadow-none print:border-none print:p-0 print:mb-8">
-                                <h3 className="text-lg font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                                    <Star size={20} className="text-yellow-500" />
-                                    Medalhas de Mérito
-                                </h3>
-                                <div className="space-y-3">
-                                    {profile.userAchievements.map((ua: any) => (
-                                        <div key={ua.achievement.id} className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl print:bg-transparent print:p-1 print:border-b print:border-gray-100">
-                                            <div className="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-2xl print:bg-transparent print:border print:border-gray-200">
-                                                {ua.achievement.icon || '🏅'}
-                                            </div>
-                                            <span className="font-bold text-slate-800 dark:text-slate-200 text-sm">
-                                                {ua.achievement.name}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
 
                     {/* RIGHT COLUMN */}
@@ -210,8 +190,17 @@ export const CVPage: React.FC = () => {
                             </h3>
                             
                             <div className="space-y-6">
-                                {profile.memberOfProjects && profile.memberOfProjects.length > 0 ? (
-                                    profile.memberOfProjects.map((mp: any) => (
+                                {(() => {
+                                    if (!profile.memberOfProjects || profile.memberOfProjects.length === 0) {
+                                        return <p className="text-slate-500 italic">Nenhum projeto registrado no sistema.</p>;
+                                    }
+                                    const filtered = profile.memberOfProjects.filter((mp: any) =>
+                                        mp.tasks && mp.tasks.some((task: any) => task.status === 'DONE')
+                                    );
+                                    if (filtered.length === 0) {
+                                        return <p className="text-slate-500 italic">Nenhum projeto com tarefas concluídas.</p>;
+                                    }
+                                    return filtered.map((mp: any) => (
                                         <div key={mp.project.id} className="group border border-slate-100 dark:border-slate-700 rounded-2xl p-5 hover:border-primary/30 transition-colors print:border-gray-300 print:break-inside-avoid">
                                             <div className="flex justify-between items-start mb-2">
                                                 <h4 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors flex items-center gap-2">
@@ -242,10 +231,8 @@ export const CVPage: React.FC = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    ))
-                                ) : (
-                                    <p className="text-slate-500 italic">Nenhum projeto registrado no sistema.</p>
-                                )}
+                                    ));
+                                })()}
                             </div>
                         </div>
 
