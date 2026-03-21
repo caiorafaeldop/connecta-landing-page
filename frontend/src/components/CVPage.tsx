@@ -52,7 +52,33 @@ export const CVPage: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-20 pb-20 print:pt-0 print:pb-0 print:bg-white cv-page">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-20 pb-20 print:p-0 print:bg-white cv-page">
+            <style>{`
+                @media print {
+                    @page {
+                        margin: 1.5cm;
+                        size: auto;
+                    }
+                    body {
+                        -webkit-print-color-adjust: exact;
+                    }
+                }
+            `}</style>
+
+            {/* Print Logo */}
+            <div className="hidden print:flex flex-col items-center justify-center mb-6 pt-4 border-b-2 border-gray-100 pb-4 w-full">
+                <div className="flex items-center gap-3">
+                    <svg width="36" height="36" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 15 L12 38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-slate-900" />
+                        <path d="M25 15 L38 38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-slate-900" />
+                        <path d="M12 38 L38 38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-slate-900" />
+                        <circle cx="12" cy="38" r="7" className="fill-slate-900" />
+                        <circle cx="38" cy="38" r="7" className="fill-slate-900" />
+                        <circle cx="25" cy="15" r="7" className="fill-primary" />
+                    </svg>
+                    <span className="font-display font-bold text-2xl text-slate-900 tracking-tight">connecta<span className="text-primary">CI</span></span>
+                </div>
+            </div>
             
             {/* FAB for Print - Hidden when printing */}
             <div className="fixed bottom-8 right-8 z-50 print:hidden">
@@ -70,14 +96,6 @@ export const CVPage: React.FC = () => {
                 {/* HERO SECTION */}
                 <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden mb-8 print:shadow-none print:rounded-none print:border-b-2 print:border-gray-200">
                     <div className="h-40 sm:h-48 bg-gradient-to-r from-primary via-blue-500 to-sky-400 relative print:h-8 print:bg-none print:border-b print:border-gray-200">
-                        {/* Gamification Badge - Absolute top right */}
-                        <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 rounded-2xl flex items-center gap-2 print:hidden cursor-default shadow-lg hover:bg-white/30 transition-colors">
-                            <Trophy className="text-yellow-300" size={20} />
-                            <div className="text-white">
-                                <span className="block text-xs uppercase tracking-wider font-semibold opacity-90">Nível Connecta</span>
-                                <span className="block font-black text-lg leading-tight">{profile.tier?.name || 'Iniciante'}</span>
-                            </div>
-                        </div>
                     </div>
 
                     <div className="px-6 sm:px-10 pb-8 sm:pb-12 relative">
@@ -94,21 +112,35 @@ export const CVPage: React.FC = () => {
                             </div>
 
                             {/* Main Info */}
-                            <div className="flex-1 pt-4 sm:pt-0 print:pt-4">
-                                <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white mb-2 leading-tight">
-                                    {profile.name}
-                                </h1>
-                                {profile.course && (
-                                    <div className="flex items-center gap-2 text-primary font-bold text-lg mb-3">
-                                        <BookOpen size={20} />
-                                        {profile.course}
+                            <div className="flex-1 pt-4 sm:pt-0 print:pt-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                                <div className="space-y-3">
+                                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight break-words">
+                                        {profile.name}
+                                    </h1>
+                                    <div className="flex flex-wrap items-center gap-3">
+                                        {profile.course && (
+                                            <div className="flex items-center gap-2 text-primary font-bold text-base sm:text-lg">
+                                                <BookOpen size={20} />
+                                                <span>{profile.course}</span>
+                                            </div>
+                                        )}
+                                        {/* Points Badge for Print / Mobile context if needed */}
+                                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm font-bold print:bg-transparent print:px-0">
+                                            <Star size={16} className="text-yellow-500" />
+                                            <span>{profile.connectaPoints || 0} Connecta Points</span>
+                                        </div>
                                     </div>
-                                )}
+                                </div>
                                 
-                                {/* Points Badge for Print / Mobile context if needed */}
-                                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm font-bold print:bg-transparent print:px-0">
-                                    <Star size={16} className="text-yellow-500" />
-                                    <span>{profile.connectaPoints || 0} Connecta Points</span>
+                                {/* Gamification Badge */}
+                                <div className="bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-4 py-3 rounded-2xl flex flex-row items-center gap-3 print:hidden shadow-sm hover:shadow-md transition-all self-start sm:self-auto w-full sm:w-auto mt-2 sm:mt-0">
+                                    <div className="bg-yellow-100 dark:bg-yellow-900/30 p-2 rounded-xl shrink-0">
+                                        <Trophy className="text-yellow-600 dark:text-yellow-400" size={24} />
+                                    </div>
+                                    <div>
+                                        <span className="block text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400">Nível Connecta</span>
+                                        <span className="block font-black text-lg text-slate-900 dark:text-white leading-tight">{profile.tier?.name || 'Iniciante'}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -164,27 +196,7 @@ export const CVPage: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Achievements Box */}
-                        {profile.userAchievements && profile.userAchievements.length > 0 && (
-                            <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700 print:shadow-none print:border-none print:p-0 print:mb-8">
-                                <h3 className="text-lg font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                                    <Star size={20} className="text-yellow-500" />
-                                    Medalhas de Mérito
-                                </h3>
-                                <div className="space-y-3">
-                                    {profile.userAchievements.map((ua: any) => (
-                                        <div key={ua.achievement.id} className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl print:bg-transparent print:p-1 print:border-b print:border-gray-100">
-                                            <div className="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-2xl print:bg-transparent print:border print:border-gray-200">
-                                                {ua.achievement.icon || '🏅'}
-                                            </div>
-                                            <span className="font-bold text-slate-800 dark:text-slate-200 text-sm">
-                                                {ua.achievement.name}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+
                     </div>
 
                     {/* RIGHT COLUMN */}
@@ -210,8 +222,8 @@ export const CVPage: React.FC = () => {
                             </h3>
                             
                             <div className="space-y-6">
-                                {profile.memberOfProjects && profile.memberOfProjects.length > 0 ? (
-                                    profile.memberOfProjects.map((mp: any) => (
+                                {profile.memberOfProjects && profile.memberOfProjects.filter((mp: any) => mp.project.tasks && mp.project.tasks.length > 0).length > 0 ? (
+                                    profile.memberOfProjects.filter((mp: any) => mp.project.tasks && mp.project.tasks.length > 0).map((mp: any) => (
                                         <div key={mp.project.id} className="group border border-slate-100 dark:border-slate-700 rounded-2xl p-5 hover:border-primary/30 transition-colors print:border-gray-300 print:break-inside-avoid">
                                             <div className="flex justify-between items-start mb-2">
                                                 <h4 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors flex items-center gap-2">

@@ -35,7 +35,7 @@ export const NavBar: React.FC = () => {
     const isActive = (path: string) => location.pathname === path ? "text-primary" : "text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary";
 
     return (
-        <nav className={`fixed w-full z-50 transition-all duration-300 border-b ${isScrolled
+        <nav className={`fixed w-full z-50 transition-all duration-300 border-b print:hidden ${isScrolled
             ? 'bg-white/95 dark:bg-secondary/95 backdrop-blur-xl shadow-lg border-gray-300 dark:border-gray-700'
             : 'bg-white/90 dark:bg-secondary/90 backdrop-blur-md border-gray-200 dark:border-gray-800'
             }`}>

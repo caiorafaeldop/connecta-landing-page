@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const Footer: React.FC = () => (
-    <footer className="bg-secondary text-white pt-16 pb-8 border-t border-gray-800">
+    <footer className="bg-secondary text-white pt-16 pb-8 border-t border-gray-800 print:hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <div className="col-span-1 md:col-span-1">
