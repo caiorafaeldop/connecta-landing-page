@@ -52,21 +52,29 @@ export const CVPage: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-20 pb-20 print:p-0 print:bg-white cv-page">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pt-20 pb-20 print:p-0 print:bg-white cv-page relative">
             <style>{`
                 @media print {
                     @page {
                         margin: 1.5cm;
-                        size: auto;
+                        size: A4;
                     }
                     body {
                         -webkit-print-color-adjust: exact;
+                        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+                    }
+                    h1, h2, h3, h4 {
+                        font-weight: 700 !important;
+                    }
+                    p, span, a {
+                        font-weight: 400;
                     }
                 }
             `}</style>
 
-            {/* Print Logo */}
-            <div className="hidden print:flex flex-col items-center justify-center mb-6 pt-4 border-b-2 border-gray-100 pb-4 w-full">
+            {/* Print Decorative Line & Logo */}
+            <div className="hidden print:block w-full h-2 bg-gradient-to-r from-primary via-blue-500 to-sky-400 absolute top-0 left-0 right-0"></div>
+            <div className="hidden print:flex flex-col items-center justify-center mb-10 pt-8 pb-6 border-b border-gray-200 w-full relative">
                 <div className="flex items-center gap-3">
                     <svg width="36" height="36" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M25 15 L12 38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-slate-900" />
@@ -94,14 +102,14 @@ export const CVPage: React.FC = () => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 print:px-0">
                 
                 {/* HERO SECTION */}
-                <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden mb-8 print:shadow-none print:rounded-none print:border-b-2 print:border-gray-200">
-                    <div className="h-40 sm:h-48 bg-gradient-to-r from-primary via-blue-500 to-sky-400 relative print:h-8 print:bg-none print:border-b print:border-gray-200">
+                <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden mb-8 print:shadow-none print:rounded-none print:border-b-2 print:border-gray-200 print:mb-10 print:overflow-visible">
+                    <div className="h-40 sm:h-48 bg-gradient-to-r from-primary via-blue-500 to-sky-400 relative print:hidden">
                     </div>
 
-                    <div className="px-6 sm:px-10 pb-8 sm:pb-12 relative">
-                        <div className="flex flex-col sm:flex-row gap-6 sm:items-end -mt-20 sm:-mt-24 mb-6">
+                    <div className="px-6 sm:px-10 pb-8 sm:pb-12 relative print:px-0 print:pb-8">
+                        <div className="flex flex-col sm:flex-row gap-6 sm:items-end -mt-20 sm:-mt-24 mb-6 print:mt-0 print:items-center">
                             {/* Avatar */}
-                            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl border-4 border-white dark:border-slate-800 shadow-xl overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0 print:border-gray-200 print:w-32 print:h-32">
+                            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl border-4 border-white dark:border-slate-800 shadow-xl overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0 print:border-gray-200 print:w-32 print:h-32 print:shadow-none">
                                 {profile.avatarUrl ? (
                                     <img src={profile.avatarUrl} alt={profile.name} className="w-full h-full object-cover" />
                                 ) : (
@@ -146,26 +154,26 @@ export const CVPage: React.FC = () => {
                         </div>
 
                         {/* Contact & Social Links */}
-                        <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100 dark:border-slate-700 print:border-gray-200 print:gap-2 print:flex-col sm:print:flex-row">
+                        <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100 dark:border-slate-700 print:border-gray-200 print:gap-2 print:flex-col sm:print:flex-row print:pt-6">
                             {profile.contactEmail && (
                                 <a href={`mailto:${profile.contactEmail}`} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-primary transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1">
-                                    <Mail size={18} />
-                                    <span className="font-medium print:block">{profile.contactEmail}</span>
+                                    <Mail size={18} className="print:text-slate-400" />
+                                    <span className="font-medium print:font-normal print:text-slate-700 print:text-sm">{profile.contactEmail}</span>
                                 </a>
                             )}
                             {profile.linkedinUrl && (
                                 <a href={profile.linkedinUrl.startsWith('http') ? profile.linkedinUrl : `https://${profile.linkedinUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-sky-600 transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1">
-                                    <Linkedin size={18} />
+                                    <Linkedin size={18} className="print:text-slate-400" />
                                     {/* Normal view: 'LinkedIn', Print view: full URL */}
                                     <span className="font-medium print:hidden">LinkedIn</span>
-                                    <span className="font-medium hidden print:inline">{profile.linkedinUrl}</span>
+                                    <span className="hidden print:inline print:font-normal print:text-slate-700 print:text-sm">{profile.linkedinUrl}</span>
                                 </a>
                             )}
                             {profile.githubUrl && (
                                 <a href={profile.githubUrl.startsWith('http') ? profile.githubUrl : `https://${profile.githubUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1">
-                                    <Github size={18} />
+                                    <Github size={18} className="print:text-slate-400" />
                                     <span className="font-medium print:hidden">GitHub</span>
-                                    <span className="font-medium hidden print:inline">{profile.githubUrl}</span>
+                                    <span className="hidden print:inline print:font-normal print:text-slate-700 print:text-sm">{profile.githubUrl}</span>
                                 </a>
                             )}
                         </div>
@@ -175,18 +183,18 @@ export const CVPage: React.FC = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 print:block">
                     
                     {/* LEFT COLUMN */}
-                    <div className="lg:col-span-1 space-y-8 print:w-full">
+                    <div className="lg:col-span-1 space-y-8 print:w-full print:space-y-10">
                         
                         {/* Skills Box */}
-                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700 print:shadow-none print:border-none print:p-0 print:mb-8">
-                            <h3 className="text-lg font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                                <Terminal size={20} className="text-primary" />
+                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700 print:shadow-none print:border-none print:p-0 print:mb-10 print:break-inside-avoid">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2 print:text-xl print:mb-5 print:border-b print:border-gray-200 print:pb-2">
+                                <Terminal size={20} className="text-primary print:hidden" />
                                 Habilidades
                             </h3>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2 print:gap-3">
                                 {profile.skills && profile.skills.length > 0 ? (
                                     profile.skills.map((skill: string, idx: number) => (
-                                        <span key={idx} className="bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-300 px-3 py-1.5 rounded-lg text-sm font-semibold print:border print:border-gray-300 print:bg-transparent print:text-black">
+                                        <span key={idx} className="bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-300 px-3 py-1.5 rounded-lg text-sm font-semibold print:border print:border-gray-300 print:bg-transparent print:text-slate-800 print:font-medium">
                                             {skill}
                                         </span>
                                     ))
@@ -200,28 +208,28 @@ export const CVPage: React.FC = () => {
                     </div>
 
                     {/* RIGHT COLUMN */}
-                    <div className="lg:col-span-2 space-y-8 print:w-full">
+                    <div className="lg:col-span-2 space-y-8 print:w-full print:space-y-10">
                         
                         {/* Bio Box */}
                         {profile.bio && (
-                            <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-700 print:shadow-none print:border-none print:p-0 print:mb-8">
-                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-4">Sobre mim</h3>
-                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                            <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-700 print:shadow-none print:border-none print:p-0 print:mb-10 print:break-inside-avoid">
+                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-4 print:border-b print:border-gray-200 print:pb-2 print:mb-5">Sobre mim</h3>
+                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium print:font-normal print:text-slate-700 print:text-justify">
                                     {profile.bio}
                                 </p>
                             </div>
                         )}
 
                         {/* Projects Box */}
-                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-700 print:shadow-none print:border-none print:p-0">
-                            <h3 className="text-xl font-black text-slate-900 dark:text-white mb-6 flex items-center justify-between">
+                        <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-700 print:shadow-none print:border-none print:p-0 print:break-inside-avoid">
+                            <h3 className="text-xl font-black text-slate-900 dark:text-white mb-6 flex items-center justify-between print:border-b print:border-gray-200 print:pb-2 print:mb-6">
                                 Projetos de Destaque
                                 <span className="text-sm font-bold bg-primary/10 text-primary px-3 py-1 rounded-full print:hidden">
                                     Connecta CI
                                 </span>
                             </h3>
                             
-                            <div className="space-y-6">
+                            <div className="space-y-6 print:space-y-8">
                                 {profile.memberOfProjects && profile.memberOfProjects.filter((mp: any) => mp.project.tasks && mp.project.tasks.length > 0).length > 0 ? (
                                     profile.memberOfProjects.filter((mp: any) => mp.project.tasks && mp.project.tasks.length > 0).map((mp: any) => (
                                         <div key={mp.project.id} className="group border border-slate-100 dark:border-slate-700 rounded-2xl p-5 hover:border-primary/30 transition-colors print:border-gray-300 print:break-inside-avoid">
