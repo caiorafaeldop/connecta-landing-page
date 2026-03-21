@@ -141,14 +141,19 @@ export const CVPage: React.FC = () => {
                                 </div>
                                 
                                 {/* Gamification Badge */}
-                                <div className="bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-4 py-3 rounded-2xl flex flex-row items-center gap-3 print:hidden shadow-sm hover:shadow-md transition-all self-start sm:self-auto w-full sm:w-auto mt-2 sm:mt-0">
-                                    <div className="bg-yellow-100 dark:bg-yellow-900/30 p-2 rounded-xl shrink-0">
-                                        <Trophy className="text-yellow-600 dark:text-yellow-400" size={24} />
+                                <div className="bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-4 py-3 rounded-2xl flex flex-col sm:max-w-[280px] print:hidden shadow-sm hover:shadow-md transition-all self-start sm:self-auto w-full sm:w-auto mt-2 sm:mt-0">
+                                    <div className="flex items-center gap-3 w-full mb-2">
+                                        <div className="bg-yellow-100 dark:bg-yellow-900/30 p-2 rounded-xl shrink-0">
+                                            <Trophy className="text-yellow-600 dark:text-yellow-400" size={24} />
+                                        </div>
+                                        <div>
+                                            <span className="block text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400">Nível Connecta</span>
+                                            <span className="block font-black text-lg text-slate-900 dark:text-white leading-tight">{profile.tier?.name || 'Iniciante'}</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span className="block text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400">Nível Connecta</span>
-                                        <span className="block font-black text-lg text-slate-900 dark:text-white leading-tight">{profile.tier?.name || 'Iniciante'}</span>
-                                    </div>
+                                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                                        Este membro é proativo e está no nível <strong className="text-slate-900 dark:text-white">{profile.tier?.name || 'Iniciante'}</strong> dentro do Connecta CI.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -156,24 +161,21 @@ export const CVPage: React.FC = () => {
                         {/* Contact & Social Links */}
                         <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100 dark:border-slate-700 print:border-gray-200 print:gap-2 print:flex-col sm:print:flex-row print:pt-6">
                             {profile.contactEmail && (
-                                <a href={`mailto:${profile.contactEmail}`} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-primary transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1">
-                                    <Mail size={18} className="print:text-slate-400" />
-                                    <span className="font-medium print:font-normal print:text-slate-700 print:text-sm">{profile.contactEmail}</span>
+                                <a href={`mailto:${profile.contactEmail}`} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-primary transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
+                                    <Mail size={18} className="print:text-slate-400 shrink-0" />
+                                    <span className="font-medium group-hover:underline truncate max-w-[200px] sm:max-w-[250px] print:font-normal print:text-slate-700 print:text-sm">{profile.contactEmail}</span>
                                 </a>
                             )}
                             {profile.linkedinUrl && (
-                                <a href={profile.linkedinUrl.startsWith('http') ? profile.linkedinUrl : `https://${profile.linkedinUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-sky-600 transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1">
-                                    <Linkedin size={18} className="print:text-slate-400" />
-                                    {/* Normal view: 'LinkedIn', Print view: full URL */}
-                                    <span className="font-medium print:hidden">LinkedIn</span>
-                                    <span className="hidden print:inline print:font-normal print:text-slate-700 print:text-sm">{profile.linkedinUrl}</span>
+                                <a href={profile.linkedinUrl.startsWith('http') ? profile.linkedinUrl : `https://${profile.linkedinUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-sky-600 transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
+                                    <Linkedin size={18} className="print:text-slate-400 shrink-0" />
+                                    <span className="font-medium group-hover:underline truncate max-w-[200px] sm:max-w-[250px] print:font-normal print:text-slate-700 print:text-sm">{profile.linkedinUrl}</span>
                                 </a>
                             )}
                             {profile.githubUrl && (
-                                <a href={profile.githubUrl.startsWith('http') ? profile.githubUrl : `https://${profile.githubUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1">
-                                    <Github size={18} className="print:text-slate-400" />
-                                    <span className="font-medium print:hidden">GitHub</span>
-                                    <span className="hidden print:inline print:font-normal print:text-slate-700 print:text-sm">{profile.githubUrl}</span>
+                                <a href={profile.githubUrl.startsWith('http') ? profile.githubUrl : `https://${profile.githubUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
+                                    <Github size={18} className="print:text-slate-400 shrink-0" />
+                                    <span className="font-medium group-hover:underline truncate max-w-[200px] sm:max-w-[250px] print:font-normal print:text-slate-700 print:text-sm">{profile.githubUrl}</span>
                                 </a>
                             )}
                         </div>
@@ -229,10 +231,10 @@ export const CVPage: React.FC = () => {
                                 </span>
                             </h3>
                             
-                            <div className="space-y-6 print:space-y-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print:block print:space-y-8">
                                 {profile.memberOfProjects && profile.memberOfProjects.filter((mp: any) => mp.project.tasks && mp.project.tasks.length > 0).length > 0 ? (
                                     profile.memberOfProjects.filter((mp: any) => mp.project.tasks && mp.project.tasks.length > 0).map((mp: any) => (
-                                        <div key={mp.project.id} className="group border border-slate-100 dark:border-slate-700 rounded-2xl p-5 hover:border-primary/30 transition-colors print:border-gray-300 print:break-inside-avoid">
+                                        <div key={mp.project.id} className="group flex flex-col border border-slate-100 dark:border-slate-700 rounded-2xl p-5 hover:border-primary/30 transition-colors print:border-gray-300 print:break-inside-avoid">
                                             <div className="flex justify-between items-start mb-2">
                                                 <h4 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors flex items-center gap-2">
                                                     {mp.project.title}
@@ -249,7 +251,7 @@ export const CVPage: React.FC = () => {
                                             </p>
                                             
                                             {/* Progress Bar - Simplified for print */}
-                                            <div className="space-y-1.5">
+                                            <div className="space-y-1.5 mb-4">
                                                 <div className="flex justify-between text-xs font-bold text-slate-500">
                                                     <span>Progresso Geral</span>
                                                     <span>{mp.project.progress || 0}%</span>
@@ -261,6 +263,18 @@ export const CVPage: React.FC = () => {
                                                     ></div>
                                                 </div>
                                             </div>
+
+                                            {/* Completed Tasks */}
+                                            {mp.project.tasks && mp.project.tasks.length > 0 && (
+                                                <div className="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                                                    <h5 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Entregas do Membro</h5>
+                                                    <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-1.5 list-disc list-inside">
+                                                        {mp.project.tasks.slice(0, 10).map((task: any) => (
+                                                            <li key={task.id} className="truncate" title={task.title}>{task.title || 'Tarefa Concluída'}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
                                         </div>
                                     ))
                                 ) : (

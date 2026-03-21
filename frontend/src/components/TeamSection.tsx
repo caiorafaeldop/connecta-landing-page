@@ -1,7 +1,7 @@
 import React from 'react';
 import { api } from '../services/api';
 import teamHierarchy from '../data/teamHierarchy.json';
-import { Github, Linkedin } from "lucide-react";
+import { Github, Linkedin, FileText } from "lucide-react";
 import { TeamMember } from '../types/types';
 
 const formatName = (name: string) => {
@@ -142,6 +142,7 @@ export const TeamSection: React.FC = () => {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-slate-500 hover:text-black dark:hover:text-white transition-colors"
+                                                    title="GitHub"
                                                 >
                                                     <Github size={20} />
                                                 </a>
@@ -151,8 +152,17 @@ export const TeamSection: React.FC = () => {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-slate-500 hover:text-blue-600 transition-colors"
+                                                    title="LinkedIn"
                                                 >
                                                     <Linkedin size={20} />
+                                                </a>
+
+                                                <a
+                                                    href={`#/cv/${member.id}`}
+                                                    className="text-slate-500 hover:text-primary transition-colors"
+                                                    title="CV Connecta"
+                                                >
+                                                    <FileText size={20} />
                                                 </a>
 
                                             </div>
@@ -207,6 +217,7 @@ export const TeamSection: React.FC = () => {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-slate-500 hover:text-black dark:hover:text-white transition-colors"
+                                                    title="GitHub"
                                                 >
                                                     <Github size={20} />
                                                 </a>
@@ -216,8 +227,17 @@ export const TeamSection: React.FC = () => {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-slate-500 hover:text-blue-600 transition-colors"
+                                                    title="LinkedIn"
                                                 >
                                                     <Linkedin size={20} />
+                                                </a>
+
+                                                <a
+                                                    href={`#/cv/${member.id}`}
+                                                    className="text-slate-500 hover:text-primary transition-colors"
+                                                    title="CV Connecta"
+                                                >
+                                                    <FileText size={20} />
                                                 </a>
 
                                             </div>
