@@ -9,6 +9,7 @@ import { ContactPage } from './components/ContactPage';
 import { TeamPage } from './components/TeamPage';
 import { PortfolioPage } from './components/PortfolioPage';
 import { EventsPage } from './components/EventsPage';
+import { CVPage } from './components/CVPage';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -34,6 +35,7 @@ const App: React.FC = () => {
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/team" element={<TeamPage />} />
                     <Route path="/portfolio" element={<PortfolioPage />} />
+                    <Route path="/cv/:userId" element={<CVPage />} />
                 </Routes>
                 <Footer />
             </div>

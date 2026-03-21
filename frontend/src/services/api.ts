@@ -40,5 +40,11 @@ export const api = {
     getMembers: async (): Promise<any[]> => {
         const data = await getData();
         return data.users || [];
+    },
+
+    getPublicProfile: async (userId: string): Promise<any> => {
+        const response = await fetch(`${API_BASE_URL}/stats/public-profile/${userId}`);
+        if (!response.ok) throw new Error('Failed to fetch public profile');
+        return response.json();
     }
 };
