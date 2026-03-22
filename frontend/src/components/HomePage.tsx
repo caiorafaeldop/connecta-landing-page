@@ -20,6 +20,17 @@ export const HomePage: React.FC = () => {
         { icon: "lightbulb", title: "Inovação", desc: "Fomentar a cultura de inovação e empreendedorismo dentro do ambiente acadêmico." }
     ];
 
+    const [globalRanking, setGlobalRanking] = useState<Array<{
+        id: string;
+        name: string;
+        avatarUrl?: string;
+        points: number;
+        level: string;
+        course?: string;
+    }>>([]);
+
+    const rankingCards = globalRanking.length > 0 ? [...globalRanking, ...globalRanking] : [];
+
 
     // Image Slideshow Configuration (Optimized URLs)
     const slideshowImages = [
@@ -48,15 +59,40 @@ export const HomePage: React.FC = () => {
 
     useEffect(() => {
         const fetchStats = async () => {
-            // In a real scenario, you might want to run these in parallel
-            const projects = await api.getProjects();
-            const events = await api.getEvents();
-            const members = await api.getMembers();
+            const [projects, events, members] = await Promise.all([
+                api.getProjects(),
+                api.getEvents(),
+                api.getMembers()
+            ]);
 
             setProjectCount(projects.length);
             setEventCount(events.length);
             setMemberCount(members.length);
+
+            const rankingResults = await Promise.allSettled(
+                members.map(async (member) => {
+                    const profile = await api.getPublicProfile(String(member.id));
+
+                    return {
+                        id: String(member.id),
+                        name: profile.name || member.name,
+                        avatarUrl: profile.avatarUrl || member.avatarUrl,
+                        points: Number(profile.connectaPoints || 0),
+                        level: profile.tier?.name || 'Iniciante',
+                        course: profile.course
+                    };
+                })
+            );
+
+            const topMembers = rankingResults
+                .flatMap((result) => result.status === 'fulfilled' ? [result.value] : [])
+                .filter((member) => member.points > 0)
+                .sort((a, b) => b.points - a.points)
+                .slice(0, 8);
+
+            setGlobalRanking(topMembers);
         };
+
         fetchStats();
     }, []);
 
@@ -220,6 +256,69 @@ export const HomePage: React.FC = () => {
                     </div>
                 </div>
             </section>
+            {globalRanking.length > 0 && (
+                <section className="py-16 bg-secondary text-white border-y border-white/5 overflow-hidden relative">
+                    <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-secondary via-secondary/90 to-transparent z-10 pointer-events-none"></div>
+                    <div className="absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-secondary via-secondary/90 to-transparent z-10 pointer-events-none"></div>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 relative z-20">
+                        <div className="max-w-3xl">
+                            <span className="inline-flex items-center py-1 px-3 rounded-full bg-white/10 border border-white/10 text-primary font-bold text-sm mb-4 tracking-wide uppercase">
+                                <span className="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+                                Ranking Connecta
+                            </span>
+                            <h2 className="font-display font-bold text-3xl sm:text-4xl mb-4">Maiores pontuações globais da comunidade</h2>
+                            <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+                                Ranking atualizado a partir dos perfis públicos reais dos membros, ordenado pelas maiores pontuações globais do Connecta.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="relative">
+                        <div className="flex w-max animate-marquee gap-6 px-4 sm:px-6 lg:px-8">
+                            {rankingCards.map((member, index) => (
+                                <article
+                                    key={`${member.id}-${index}`}
+                                    className="min-w-[260px] sm:min-w-[320px] rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 shadow-lg shadow-black/10"
+                                >
+                                    <div className="flex items-center justify-between gap-4 mb-5">
+                                        <div className="flex items-center gap-4 min-w-0">
+                                            <div className="w-14 h-14 rounded-full overflow-hidden border border-white/10 bg-white/10 shrink-0">
+                                                {member.avatarUrl ? (
+                                                    <img src={member.avatarUrl} alt={member.name} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center text-lg font-black text-primary">
+                                                        {member.name.charAt(0)}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="text-xs uppercase tracking-[0.3em] text-primary/80 mb-1">Top global</p>
+                                                <h3 className="font-display font-bold text-xl text-white truncate">{member.name}</h3>
+                                                <p className="text-sm text-gray-300 truncate">{member.course || 'Comunidade Connecta'}</p>
+                                            </div>
+                                        </div>
+                                        <div className="w-12 h-12 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-black text-lg shrink-0">
+                                            #{(index % globalRanking.length) + 1}
+                                        </div>
+                                    </div>
+                                    <div className="space-y-3 text-sm text-gray-200">
+                                        <div className="flex items-center justify-between gap-4">
+                                            <span className="text-gray-400">Pontuação</span>
+                                            <span className="font-bold text-2xl text-white">{member.points.toLocaleString('pt-BR')}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between gap-4">
+                                            <span className="text-gray-400">Nível</span>
+                                            <span className="font-semibold text-primary text-right">{member.level}</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
             <section className="py-20 bg-background-light dark:bg-background-dark relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     {isLoading ? (
