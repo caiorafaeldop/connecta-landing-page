@@ -269,7 +269,7 @@ export const HomePage: React.FC = () => {
                             </span>
                             <h2 className="font-display font-bold text-3xl sm:text-4xl mb-4">Maiores pontuações globais da comunidade</h2>
                             <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
-                                Ranking atualizado a partir dos perfis públicos reais dos membros, ordenado pelas maiores pontuações globais do Connecta.
+                                
                             </p>
                         </div>
                     </div>
