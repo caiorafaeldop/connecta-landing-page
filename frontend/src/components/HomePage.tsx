@@ -20,6 +20,18 @@ export const HomePage: React.FC = () => {
         { icon: "lightbulb", title: "Inovação", desc: "Fomentar a cultura de inovação e empreendedorismo dentro do ambiente acadêmico." }
     ];
 
+    const rankingMembers = [
+        { name: 'Ana Clara', points: 12840, level: 'Embaixadora Global', highlight: 'Top 1 mundial' },
+        { name: 'Lucas Martins', points: 12110, level: 'Conector Sênior', highlight: 'Networking de elite' },
+        { name: 'Beatriz Lima', points: 11875, level: 'Mentora Connecta', highlight: 'Projetos em destaque' },
+        { name: 'Rafael Costa', points: 11320, level: 'Líder de Impacto', highlight: 'Comunidade em expansão' },
+        { name: 'Juliana Alves', points: 10990, level: 'Catalisadora Tech', highlight: 'Eventos globais' },
+        { name: 'Pedro Henrique', points: 10540, level: 'Builder Connecta', highlight: 'Resultados consistentes' }
+    ];
+
+    const rankingTickerItems = [...rankingMembers, ...rankingMembers];
+
+
 
     // Image Slideshow Configuration (Optimized URLs)
     const slideshowImages = [
@@ -220,6 +232,74 @@ export const HomePage: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            <section className="py-16 bg-slate-950 text-white border-y border-white/10 overflow-hidden">
+                <style>{`
+                    @keyframes connecta-ranking-marquee {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(-50%); }
+                    }
+                `}</style>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+                    <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                        <div className="max-w-2xl">
+                            <span className="inline-flex items-center py-1 px-3 rounded-full bg-primary/15 border border-primary/20 text-primary font-bold text-sm mb-4 tracking-wide uppercase">
+                                <span className="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+                                Ranking Connecta
+                            </span>
+                            <h2 className="font-display font-bold text-3xl sm:text-4xl mb-4">Maiores pontuações globais da comunidade</h2>
+                            <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
+                                Um painel em movimento contínuo destacando os membros com melhor desempenho global dentro do ecossistema Connecta.
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 min-w-fit">
+                            <div className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-sm">
+                                <div className="text-2xl font-black text-primary">+12k</div>
+                                <div className="text-xs uppercase tracking-[0.2em] text-gray-400">Maior score</div>
+                            </div>
+                            <div className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-sm">
+                                <div className="text-2xl font-black text-white">Global</div>
+                                <div className="text-xs uppercase tracking-[0.2em] text-gray-400">Atualizado em destaque</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="relative">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-950 to-transparent z-10"></div>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-950 to-transparent z-10"></div>
+
+                    <div className="flex w-max gap-6 px-4 sm:px-6 lg:px-8" style={{ animation: 'connecta-ranking-marquee 28s linear infinite' }}>
+                        {rankingTickerItems.map((member, index) => (
+                            <article
+                                key={`${member.name}-${index}`}
+                                className="min-w-[280px] sm:min-w-[340px] rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/20 backdrop-blur-md"
+                            >
+                                <div className="flex items-start justify-between gap-4 mb-5">
+                                    <div>
+                                        <p className="text-xs uppercase tracking-[0.3em] text-primary mb-2">#{(index % rankingMembers.length) + 1} Global</p>
+                                        <h3 className="text-2xl font-bold text-white">{member.name}</h3>
+                                        <p className="text-sm text-gray-400 mt-1">{member.level}</p>
+                                    </div>
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/20 text-primary text-xl font-black">
+                                        {(index % rankingMembers.length) + 1}
+                                    </div>
+                                </div>
+                                <div className="flex items-end justify-between gap-4">
+                                    <div>
+                                        <p className="text-gray-400 text-xs uppercase tracking-[0.3em] mb-2">Pontuação</p>
+                                        <p className="text-3xl font-black text-white">{member.points.toLocaleString('pt-BR')}</p>
+                                    </div>
+                                    <div className="rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+                                        {member.highlight}
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             <section className="py-20 bg-background-light dark:bg-background-dark relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     {isLoading ? (
