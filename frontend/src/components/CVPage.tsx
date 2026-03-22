@@ -184,23 +184,23 @@ export const CVPage: React.FC = () => {
                         </div>
 
                         {/* Contact & Social Links */}
-                        <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100 dark:border-slate-700 print:border-gray-200 print:gap-2 print:flex-col sm:print:flex-row print:pt-6">
+                        <div className="flex flex-col gap-3 pt-4 border-t border-slate-100 dark:border-slate-700 print:border-gray-200 print:pt-6">
                             {profile.contactEmail && (
-                                <a href={`mailto:${profile.contactEmail}`} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-primary transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
-                                    <Mail size={18} className="print:text-slate-400 shrink-0" />
-                                    <span className="font-medium group-hover:underline truncate max-w-[200px] sm:max-w-[250px] print:font-normal print:text-slate-700 print:text-sm">{profile.contactEmail}</span>
+                                <a href={`mailto:${profile.contactEmail}`} className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-primary transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
+                                    <Mail size={18} className="shrink-0" />
+                                    <span className="font-medium group-hover:underline break-all print:font-normal print:text-sm">{profile.contactEmail}</span>
                                 </a>
                             )}
                             {profile.linkedinUrl && (
-                                <a href={profile.linkedinUrl.startsWith('http') ? profile.linkedinUrl : `https://${profile.linkedinUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-sky-600 transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
-                                    <Linkedin size={18} className="print:text-slate-400 shrink-0" />
-                                    <span className="font-medium group-hover:underline truncate max-w-[200px] sm:max-w-[250px] print:font-normal print:text-slate-700 print:text-sm">{profile.linkedinUrl}</span>
+                                <a href={profile.linkedinUrl.startsWith('http') ? profile.linkedinUrl : `https://${profile.linkedinUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-sky-600 transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
+                                    <Linkedin size={18} className="shrink-0" />
+                                    <span className="font-medium group-hover:underline break-all print:font-normal print:text-sm">{profile.linkedinUrl}</span>
                                 </a>
                             )}
                             {profile.githubUrl && (
-                                <a href={profile.githubUrl.startsWith('http') ? profile.githubUrl : `https://${profile.githubUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
-                                    <Github size={18} className="print:text-slate-400 shrink-0" />
-                                    <span className="font-medium group-hover:underline truncate max-w-[200px] sm:max-w-[250px] print:font-normal print:text-slate-700 print:text-sm">{profile.githubUrl}</span>
+                                <a href={profile.githubUrl.startsWith('http') ? profile.githubUrl : `https://${profile.githubUrl}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-slate-900 dark:hover:text-white transition-colors bg-slate-50 dark:bg-slate-900/50 px-4 py-2 rounded-xl print:bg-transparent print:px-0 print:py-1 group">
+                                    <Github size={18} className="shrink-0" />
+                                    <span className="font-medium group-hover:underline break-all print:font-normal print:text-sm">{profile.githubUrl}</span>
                                 </a>
                             )}
                         </div>
@@ -275,20 +275,6 @@ export const CVPage: React.FC = () => {
                                                 {mp.project.description || 'Participação ativa no desenvolvimento deste projeto.'}
                                             </p>
                                             
-                                            {/* Progress Bar - Simplified for print */}
-                                            <div className="space-y-1.5 mb-4">
-                                                <div className="flex justify-between text-xs font-bold text-slate-500">
-                                                    <span>Progresso Geral</span>
-                                                    <span>{mp.project.progress || 0}%</span>
-                                                </div>
-                                                <div className="w-full bg-slate-100 dark:bg-slate-900 rounded-full h-1.5 print:bg-gray-200">
-                                                    <div 
-                                                        className="bg-primary h-1.5 rounded-full print:bg-gray-600" 
-                                                        style={{ width: `${mp.project.progress || 0}%` }}
-                                                    ></div>
-                                                </div>
-                                            </div>
-
                                             {/* Completed Tasks */}
                                             {mp.project.tasks && mp.project.tasks.length > 0 && (
                                                 <div className="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
