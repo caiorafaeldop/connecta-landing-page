@@ -67,7 +67,7 @@ export const NavBar: React.FC = () => {
                         {/*<Link className={`font-display font-medium transition-colors ${isActive('/support')}`} to="/support">Apoie</Link>*/}
 
                         <Link to="/contact" className="bg-primary hover:bg-sky-400 text-white px-5 py-2.5 rounded-full font-bold shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5">
-                            
+                            Contato
                         </Link>
 
                         <button
@@ -137,7 +137,7 @@ export const NavBar: React.FC = () => {
                                     Apoie
                                 </Link>*/}
                                 <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="block px-4 py-3 rounded-lg text-base font-semibold bg-primary/10 text-primary dark:text-primary hover:bg-primary hover:text-white transition-all">
-                                    
+                                    Contato
                                 </Link>
                             </div>
                         </div>
