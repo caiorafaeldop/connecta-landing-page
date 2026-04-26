@@ -97,7 +97,7 @@ export const CVPage: React.FC = () => {
                 }
             `}</style>
 
-            {/* Print Decorative Line & Logo */}
+            {/* Print Decorative Line eLogo */}
             <div className="hidden print:block w-full h-2 bg-gradient-to-r from-primary via-blue-500 to-sky-400 absolute top-0 left-0 right-0"></div>
             <div className="hidden print:flex flex-col items-center justify-center mb-10 pt-8 pb-6 border-b border-gray-200 w-full relative">
                 <div className="flex items-center gap-3">

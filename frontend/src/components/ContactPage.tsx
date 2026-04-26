@@ -54,7 +54,7 @@ export const ContactPage: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 relative z-10">
                 <div className="text-center mb-16">
                     <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-bold tracking-wider uppercase mb-4">
-                        Conexão Universidade & Mercado
+                        Conexão Universidade eMercado
                     </span>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-slate-900 dark:text-white mb-6">
                         Vamos construir o <br className="hidden md:block" /> <span className="text-primary">futuro juntos?</span>
