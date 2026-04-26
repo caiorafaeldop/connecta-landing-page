@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 export const NavBar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isDark, setIsDark] = useState(true);
+    const [isDark, setIsDark] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
 
